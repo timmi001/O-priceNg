@@ -8,7 +8,7 @@ import Home from "@/pages/home";
 import Explore from "@/pages/explore";
 import Sell from "@/pages/sell";
 import Profile from "@/pages/profile";
-import Notifications from "@/pages/notifications";
+import Saved from "@/pages/saved";
 import Messages from "@/pages/messages";
 import Chat from "@/pages/chat";
 import ListingDetail from "@/pages/listing";
@@ -31,7 +31,7 @@ function Router() {
       <Route path="/explore" component={Explore} />
       <Route path="/sell" component={Sell} />
       <Route path="/profile" component={Profile} />
-      <Route path="/notifications" component={Notifications} />
+      <Route path="/saved" component={Saved} />
       <Route path="/messages" component={Messages} />
       <Route path="/messages/:id" component={Chat} />
       <Route path="/listing/:id" component={ListingDetail} />

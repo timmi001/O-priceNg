@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, Search, Plus, Bell, User, Store } from "lucide-react";
+import { Home, Search, Plus, Bookmark, User, Store } from "lucide-react";
 
 interface BottomNavProps {
   hidden?: boolean;
@@ -46,14 +46,13 @@ export function BottomNav({ hidden = false }: BottomNavProps) {
             </div>
           </Link>
 
-          <Link href="/notifications" className="flex flex-col items-center gap-1" data-testid="nav-notifications">
-            <div className={`relative p-2 rounded-2xl transition-colors ${isActive("/notifications") ? "bg-primary/15" : "hover:bg-white/5"}`}>
-              <Bell
-                className={`w-6 h-6 transition-colors ${isActive("/notifications") ? "text-primary" : "text-white/40"}`}
-                strokeWidth={isActive("/notifications") ? 2.5 : 1.8}
+          <Link href="/saved" className="flex flex-col items-center gap-1" data-testid="nav-saved">
+            <div className={`p-2 rounded-2xl transition-colors ${isActive("/saved") ? "bg-primary/15" : "hover:bg-white/5"}`}>
+              <Bookmark
+                className={`w-6 h-6 transition-colors ${isActive("/saved") ? "text-primary" : "text-white/40"}`}
+                strokeWidth={isActive("/saved") ? 2.5 : 1.8}
+                fill={isActive("/saved") ? "currentColor" : "none"}
               />
-              {/* Notification dot */}
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-[#0d0d0d]" />
             </div>
           </Link>
 
