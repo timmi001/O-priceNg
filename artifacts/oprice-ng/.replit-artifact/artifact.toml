@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "O'price Ng"
+version = "1.0.0"
+id = "artifacts/oprice-ng"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20014
+
+[services.development]
+run = "pnpm --filter @workspace/oprice-ng run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/oprice-ng", "run", "build" ]
+publicDir = "artifacts/oprice-ng/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20014"
+BASE_PATH = "/"

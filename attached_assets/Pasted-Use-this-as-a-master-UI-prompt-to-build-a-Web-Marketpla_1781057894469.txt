@@ -1,0 +1,394 @@
+Use this as a master UI prompt to build a
+
+Web Marketplace App Prompt (Twitter/X Style)
+Create a modern, pixel-perfect web marketplace app inspired by the Twitter/X mobile feed experience, redesigned specifically for buying and selling products.
+The app should feel like a mix of:
+Twitter/X social feed
+Facebook Marketplace
+OfferUp
+TikTok Shop
+while maintaining a clean, premium 2026 startup aesthetic.
+
+
+⸻
+
+
+Design Style
+Dark mode by default
+Background: #000000
+Cards: #16181c
+Borders: #2f3336
+Primary Accent: #1d9bf0
+Success Green: #00ba7c
+Warning Orange: #ffad1f
+Text Primary: #ffffff
+Text Secondary: #8b98a5
+Style should look identical in quality to:
+Twitter/X
+Threads
+Airbnb
+Stripe
+Linear
+Professional, trustworthy, modern, premium.
+
+
+⸻
+
+
+App Structure
+Bottom Navigation (Fixed)
+4 tabs:
+Home
+Twitter-style marketplace feed.
+Explore
+Search products and categories.
+Sell
+Floating blue action button
+Profile
+User account.
+
+
+⸻
+
+
+HOME FEED
+The home page should look almost identical to Twitter’s For You feed.
+
+
+⸻
+
+
+Top Navigation
+Sticky header.
+Layout:
+Marketplace Logo will be O’price Ng
+For You
+Trending deals
+Notifications Icon
+The selected tab should have a blue underline.
+
+
+⸻
+
+
+Create Listing Composer
+At the top of feed.
+Container style:
+Rounded 24px
+Dark card background
+Border subtle
+Content:
+User avatar on left.
+Placeholder:
+“What are you selling today?”
+Below input show action row:
+📷 Photos
+🏷 Price
+📍 Location
+📂 Category
+Blue button:
+“Post Listing”
+
+
+⸻
+
+
+Marketplace Feed
+Infinite vertical scroll.
+Each post should resemble a tweet card.
+
+
+⸻
+
+
+Product Card Layout
+Top Section:
+Seller avatar
+Seller name
+Verified badge
+Username
+Timestamp
+Three-dot menu
+Example:
+John Tech ✓
+@johntech
+2h
+
+
+⸻
+
+
+Product Media
+Support:
+Single Image
+Large image with rounded corners.
+Multi-image Carousel
+Main image large.
+Swipe horizontally.
+2x2 Grid
+Like Twitter image layout.
+Perfect spacing.
+
+
+⸻
+
+
+Product Content
+Show:
+Product title
+Short description
+Price
+Condition badge
+Location
+Shipping info
+Example:
+iPhone 15 Pro Max
+256GB • Like New
+
+₦1,250,000
+
+New
+
+Abuja, Nigeria
+Nationwide Delivery
+
+
+⸻
+
+
+Social Commerce Metrics
+Below listing show:
+12 Offers
+248 Views
+34 Watching
+Small modern icons.
+
+
+⸻
+
+
+Action Bar
+Twitter-inspired.
+Left to right:
+Message Seller
+Share
+Bookmark
+Each action has subtle hover/tap animations.
+⸻
+
+
+Sponsored Listing
+Show one feed item labeled:
+Sponsored
+Small gray badge.
+Must still look native.
+
+
+⸻
+
+
+Live Auction Card
+One card should show:
+LIVE AUCTION
+Red badge.
+Include countdown timer.
+Example:
+00:18:42
+Current bid section.
+Auction CTA:
+“Place Bid”
+
+
+⸻
+
+
+Example Feed Items
+Show realistic products:
+Electronics
+iPhone 15 Pro
+MacBook Air
+PS5
+Fashion
+Nike Sneakers
+Vintage Jacket
+Home
+Luxury Sofa
+Dining Table
+Jewelry
+Handmade Necklace
+Vehicles
+Used Toyota Corolla
+
+
+⸻
+
+
+Product Detail Page
+When a card is opened.
+Layout:
+Large image gallery.
+Swipe support.
+Image indicators.
+
+
+⸻
+
+
+Below images:
+Product title
+Price
+Seller info
+Description
+Condition
+Location
+Shipping options
+Views
+Watchers
+
+
+⸻
+
+
+Sticky Bottom CTA
+Buttons:
+Message Seller
+Add To Cart
+Buy Now
+Always visible.
+
+
+⸻
+
+
+Explore Page
+Twitter search page style.
+Top search bar:
+Search products, sellers, categories...
+
+
+⸻
+
+
+Below:
+Trending searches.
+Example:
+iPhone
+PS5
+Nike
+Furniture
+Laptops
+Cars
+
+
+⸻
+
+
+Category chips:
+Phones
+Electronics
+Computers
+Fashion
+Food&Agriculture
+Vehicles
+Property
+Appliances 
+Home&kitchen
+Food&Beverages
+
+
+
+⸻
+
+
+Seller Profile Page
+Twitter profile layout.
+Cover photo.
+Profile image overlapping.
+Seller name.
+Verified badge.
+Bio.
+Location.
+Join date.
+Ratings.
+Products sold.
+
+
+⸻
+
+Buttons:
+Message
+
+⸻
+Product grid below profile.
+2-column layout
+⸻
+
+Product preview attachment support.
+
+⸻
+
+
+Notifications Page
+Twitter notifications design.
+Examples:
+Sarah liked your listing
+
+John sent an offer
+
+Price drop alert
+
+Auction ending soon
+Grouped by date.
+
+⸻
+
+
+Categories Page
+Grid layout.
+Rounded icon cards.
+Categories:
+Phones
+Electronics
+Computers
+Fashion
+Food&Agriculture
+Vehicles
+Property
+Appliances 
+Home&kitchen
+Food&Beverages
+
+
+⸻
+
+Micro Interactions
+Include:
+Pull to refresh
+Skeleton loading states
+Card lift animation
+Smooth page transitions
+Floating action button animation
+Like animation
+Swipe gestures
+Infinite scrolling
+
+
+
+⸻
+
+
+UI Quality
+Create:
+Ultra-detailed 
+Pixel-perfect spacing
+Modern SaaS quality
+Premium startup aesthetic
+Production-ready UI
+Sharp typography
+Realistic content
+Perfect alignment
+No text distortion
+2026 design trends
+Twitter/X-inspired social commerce experience
+Dark mode masterpiece
+Goal: Make users feel like they are scrolling Twitter/X, but every post is a product listing they can instantly buy, message, bid on, save, or share.

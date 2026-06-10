@@ -1,22 +1,32 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: O'price Ng marketplace API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: listings
+    description: Product listings
+  - name: users
+    description: User profiles
+  - name: offers
+    description: Offers on listings
+  - name: messages
+    description: Seller messaging
+  - name: bookmarks
+    description: Saved listings
+  - name: feed
+    description: Feed and discovery
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +34,426 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /listings:
+    get:
+      operationId: getListings
+      tags: [listings]
+      summary: Get paginated feed of listings
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: condition
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of listings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListingsPage"
+    post:
+      operationId: createListing
+      tags: [listings]
+      summary: Create a new listing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingInput"
+      responses:
+        "201":
+          description: Created listing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+
+  /listings/trending:
+    get:
+      operationId: getTrendingListings
+      tags: [listings]
+      summary: Get trending listings
+      responses:
+        "200":
+          description: Trending listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Listing"
+
+  /listings/featured:
+    get:
+      operationId: getFeaturedListings
+      tags: [listings]
+      summary: Get featured/sponsored listings
+      responses:
+        "200":
+          description: Featured listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Listing"
+
+  /listings/{id}:
+    get:
+      operationId: getListing
+      tags: [listings]
+      summary: Get a single listing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Listing detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateListing
+      tags: [listings]
+      summary: Update a listing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingUpdate"
+      responses:
+        "200":
+          description: Updated listing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+    delete:
+      operationId: deleteListing
+      tags: [listings]
+      summary: Delete a listing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /listings/{id}/watch:
+    post:
+      operationId: watchListing
+      tags: [listings]
+      summary: Toggle watch on a listing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Watch toggled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WatchResult"
+
+  /listings/{id}/offers:
+    get:
+      operationId: getListingOffers
+      tags: [offers]
+      summary: Get offers on a listing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Offers list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Offer"
+    post:
+      operationId: createOffer
+      tags: [offers]
+      summary: Make an offer on a listing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OfferInput"
+      responses:
+        "201":
+          description: Offer created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+
+  /listings/{id}/bid:
+    post:
+      operationId: placeBid
+      tags: [listings]
+      summary: Place an auction bid
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BidInput"
+      responses:
+        "201":
+          description: Bid placed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bid"
+
+  /users/{username}:
+    get:
+      operationId: getUserProfile
+      tags: [users]
+      summary: Get seller profile
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /users/{username}/listings:
+    get:
+      operationId: getUserListings
+      tags: [users]
+      summary: Get all listings by a user
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Listing"
+
+  /bookmarks:
+    get:
+      operationId: getBookmarks
+      tags: [bookmarks]
+      summary: Get bookmarked listings
+      responses:
+        "200":
+          description: Bookmarks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Listing"
+
+  /bookmarks/{listingId}:
+    post:
+      operationId: toggleBookmark
+      tags: [bookmarks]
+      summary: Toggle bookmark on a listing
+      parameters:
+        - name: listingId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Bookmark toggled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookmarkResult"
+
+  /messages:
+    get:
+      operationId: getConversations
+      tags: [messages]
+      summary: Get user conversations
+      responses:
+        "200":
+          description: Conversations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Conversation"
+
+  /messages/{conversationId}:
+    get:
+      operationId: getMessages
+      tags: [messages]
+      summary: Get messages in a conversation
+      parameters:
+        - name: conversationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Message"
+    post:
+      operationId: sendMessage
+      tags: [messages]
+      summary: Send a message
+      parameters:
+        - name: conversationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageInput"
+      responses:
+        "201":
+          description: Message sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+
+  /notifications:
+    get:
+      operationId: getNotifications
+      tags: [feed]
+      summary: Get user notifications
+      responses:
+        "200":
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+
+  /feed/stats:
+    get:
+      operationId: getFeedStats
+      tags: [feed]
+      summary: Get marketplace stats (total listings, active users, etc)
+      responses:
+        "200":
+          description: Feed stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedStats"
+
+  /categories:
+    get:
+      operationId: getCategories
+      tags: [feed]
+      summary: Get all product categories
+      responses:
+        "200":
+          description: Categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+  /search/trending:
+    get:
+      operationId: getTrendingSearches
+      tags: [feed]
+      summary: Get trending search terms
+      responses:
+        "200":
+          description: Trending searches
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrendingSearch"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +461,325 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    Listing:
+      type: object
+      required: [id, title, price, sellerId, sellerName, sellerUsername, sellerAvatar, condition, category, location, createdAt, viewCount, watchCount, offerCount, isAuction, isSponsored, isVerifiedSeller]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: ["string", "null"]
+        price:
+          type: number
+        originalPrice:
+          type: ["number", "null"]
+        sellerId:
+          type: integer
+        sellerName:
+          type: string
+        sellerUsername:
+          type: string
+        sellerAvatar:
+          type: ["string", "null"]
+        isVerifiedSeller:
+          type: boolean
+        condition:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+        shippingInfo:
+          type: ["string", "null"]
+        images:
+          type: array
+          items:
+            type: string
+        viewCount:
+          type: integer
+        watchCount:
+          type: integer
+        offerCount:
+          type: integer
+        isAuction:
+          type: boolean
+        auctionEndsAt:
+          type: ["string", "null"]
+        currentBid:
+          type: ["number", "null"]
+        isSponsored:
+          type: boolean
+        isWatched:
+          type: boolean
+        isBookmarked:
+          type: boolean
+        createdAt:
+          type: string
+
+    ListingInput:
+      type: object
+      required: [title, price, condition, category, location]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        condition:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+        shippingInfo:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        isAuction:
+          type: boolean
+
+    ListingUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        condition:
+          type: string
+        location:
+          type: string
+        shippingInfo:
+          type: string
+
+    ListingsPage:
+      type: object
+      required: [listings, total, page, limit]
+      properties:
+        listings:
+          type: array
+          items:
+            $ref: "#/components/schemas/Listing"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+
+    UserProfile:
+      type: object
+      required: [id, name, username, avatar, bio, location, joinDate, rating, totalSales, totalListings, isVerified]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        avatar:
+          type: ["string", "null"]
+        coverImage:
+          type: ["string", "null"]
+        bio:
+          type: ["string", "null"]
+        location:
+          type: string
+        joinDate:
+          type: string
+        rating:
+          type: number
+        totalSales:
+          type: integer
+        totalListings:
+          type: integer
+        isVerified:
+          type: boolean
+
+    Offer:
+      type: object
+      required: [id, listingId, buyerName, buyerUsername, amount, status, createdAt]
+      properties:
+        id:
+          type: integer
+        listingId:
+          type: integer
+        buyerName:
+          type: string
+        buyerUsername:
+          type: string
+        amount:
+          type: number
+        status:
+          type: string
+        message:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    OfferInput:
+      type: object
+      required: [amount]
+      properties:
+        amount:
+          type: number
+        message:
+          type: string
+
+    Bid:
+      type: object
+      required: [id, listingId, bidderName, bidderUsername, amount, createdAt]
+      properties:
+        id:
+          type: integer
+        listingId:
+          type: integer
+        bidderName:
+          type: string
+        bidderUsername:
+          type: string
+        amount:
+          type: number
+        createdAt:
+          type: string
+
+    BidInput:
+      type: object
+      required: [amount]
+      properties:
+        amount:
+          type: number
+
+    WatchResult:
+      type: object
+      required: [isWatched, watchCount]
+      properties:
+        isWatched:
+          type: boolean
+        watchCount:
+          type: integer
+
+    BookmarkResult:
+      type: object
+      required: [isBookmarked]
+      properties:
+        isBookmarked:
+          type: boolean
+
+    Conversation:
+      type: object
+      required: [id, otherPartyName, otherPartyUsername, otherPartyAvatar, listingTitle, lastMessage, lastMessageAt, unreadCount]
+      properties:
+        id:
+          type: integer
+        otherPartyName:
+          type: string
+        otherPartyUsername:
+          type: string
+        otherPartyAvatar:
+          type: ["string", "null"]
+        listingTitle:
+          type: string
+        listingImage:
+          type: ["string", "null"]
+        lastMessage:
+          type: string
+        lastMessageAt:
+          type: string
+        unreadCount:
+          type: integer
+
+    Message:
+      type: object
+      required: [id, conversationId, senderUsername, content, createdAt, isMine]
+      properties:
+        id:
+          type: integer
+        conversationId:
+          type: integer
+        senderUsername:
+          type: string
+        content:
+          type: string
+        createdAt:
+          type: string
+        isMine:
+          type: boolean
+
+    MessageInput:
+      type: object
+      required: [content]
+      properties:
+        content:
+          type: string
+
+    Notification:
+      type: object
+      required: [id, type, text, isRead, createdAt]
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        text:
+          type: string
+        actorName:
+          type: ["string", "null"]
+        actorUsername:
+          type: ["string", "null"]
+        actorAvatar:
+          type: ["string", "null"]
+        listingTitle:
+          type: ["string", "null"]
+        listingImage:
+          type: ["string", "null"]
+        isRead:
+          type: boolean
+        createdAt:
+          type: string
+
+    FeedStats:
+      type: object
+      required: [totalListings, activeListings, totalSellers, totalCategories]
+      properties:
+        totalListings:
+          type: integer
+        activeListings:
+          type: integer
+        totalSellers:
+          type: integer
+        totalCategories:
+          type: integer
+
+    Category:
+      type: object
+      required: [id, name, slug, listingCount]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        listingCount:
+          type: integer
+        icon:
+          type: ["string", "null"]
+
+    TrendingSearch:
+      type: object
+      required: [term, count]
+      properties:
+        term:
+          type: string
+        count:
+          type: integer
