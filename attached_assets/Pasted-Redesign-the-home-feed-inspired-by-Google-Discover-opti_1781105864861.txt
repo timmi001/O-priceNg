@@ -1,0 +1,83 @@
+Redesign the home feed inspired by Google Discover, optimized for a marketplace and social commerce platform. Dark mode UI, premium 2026 design, ultra-clean layout, iPhone screen quality 
+
+Header Section
+
+Large centered logo
+Rounded universal search bar with search icon, voice search, and camera search
+Profile avatar in top-right corner
+Menu icon in top-left corner
+
+Quick Action Cards
+
+Horizontal scrollable cards beneath search
+Rounded pill-shaped widgets
+Categories such as:
+Electronics
+Vehicles
+Fashion
+Property
+Jobs
+Deals
+Modern glassmorphism effect
+
+Feed Section
+
+Infinite vertical feed similar to Google Discover
+Large edge-to-edge image cards
+Each card contains:
+Seller avatar
+Seller/business name
+Follow button
+Large product image
+Product title
+Price
+Location
+Time posted
+Like, comment, share, save icons beneath each post
+
+Card Style
+
+Large rounded corners (24px)
+Soft shadows
+Premium dark surfaces
+Minimal borders
+High-quality product photography
+Smooth spacing and typography
+
+Bottom Navigation
+
+Home
+Market
+Post
+Notifications
+Profile
+Floating center create-post button
+
+Design Language
+
+Mix of Google Discover + Apple Human Interface Guidelines
+Premium marketplace feel
+Minimal clutter
+High engagement feed
+Dark charcoal background
+White typography
+Subtle blue accent colors
+Smooth modern animations
+
+Overall Feel
+
+Google Discover 
+Focus on browsing products, deals, and local listings
+Clean, addictive scrolling experience
+Professional startup-quality UI ready for production
+
+Implement auto-hide navigation behavior similar to Google Discover and Twitter/X.
+
+When user scrolls down, smoothly hide the header, search bar, category chips, and bottom navigation using translateY animations.
+When user scrolls up, smoothly reveal them.
+After the main header disappears, show a compact floating search bar pinned near the top.
+Use smooth 200–300ms animations.
+Prevent flickering during small scroll movements by using a threshold of 50px.
+Maintain scroll position while elements hide and reveal.
+Optimize for mobile devices.
+Dark mode design with premium 2026 UI aesthetics

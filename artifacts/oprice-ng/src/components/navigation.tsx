@@ -1,32 +1,72 @@
 import { Link, useLocation } from "wouter";
-import { Home, Search, PlusSquare, User, Bell, Mail } from "lucide-react";
+import { Home, Search, Plus, Bell, User, Store } from "lucide-react";
 
-export function BottomNav() {
+interface BottomNavProps {
+  hidden?: boolean;
+}
+
+export function BottomNav({ hidden = false }: BottomNavProps) {
   const [location] = useLocation();
+
+  const isActive = (path: string) => location === path;
 
   return (
     <>
-      {/* Spacer to prevent content from being hidden behind nav */}
-      <div className="h-16" />
-      <nav className="fixed bottom-0 w-full bg-background/90 backdrop-blur-md border-t border-border flex justify-around p-3 z-50 safe-area-bottom pb-4">
-        <Link href="/" className={`flex flex-col items-center gap-1 ${location === '/' ? 'text-primary' : 'text-muted-foreground'}`}>
-          <Home className="w-6 h-6" strokeWidth={location === '/' ? 2.5 : 2} />
-        </Link>
-        <Link href="/explore" className={`flex flex-col items-center gap-1 ${location === '/explore' ? 'text-primary' : 'text-muted-foreground'}`}>
-          <Search className="w-6 h-6" strokeWidth={location === '/explore' ? 2.5 : 2} />
-        </Link>
-        
-        {/* Floating FAB for Sell */}
-        <Link href="/sell" className="relative -top-5 bg-primary text-primary-foreground p-3 rounded-full shadow-lg shadow-primary/20 flex items-center justify-center">
-          <PlusSquare className="w-6 h-6" strokeWidth={2.5} />
-        </Link>
+      {/* Spacer */}
+      <div className="h-20" />
 
-        <Link href="/notifications" className={`flex flex-col items-center gap-1 ${location === '/notifications' ? 'text-primary' : 'text-muted-foreground'}`}>
-          <Bell className="w-6 h-6" strokeWidth={location === '/notifications' ? 2.5 : 2} />
-        </Link>
-        <Link href="/profile" className={`flex flex-col items-center gap-1 ${location === '/profile' ? 'text-primary' : 'text-muted-foreground'}`}>
-          <User className="w-6 h-6" strokeWidth={location === '/profile' ? 2.5 : 2} />
-        </Link>
+      <nav
+        className="fixed bottom-0 left-0 right-0 z-40 transition-transform duration-300 ease-in-out will-change-transform"
+        style={{ transform: hidden ? "translateY(100%)" : "translateY(0)" }}
+      >
+        <div className="bg-[#0d0d0d]/95 backdrop-blur-xl border-t border-white/6 flex items-center justify-around px-2 pt-3 pb-5 safe-area-bottom">
+
+          <Link href="/" className="flex flex-col items-center gap-1" data-testid="nav-home">
+            <div className={`p-2 rounded-2xl transition-colors ${isActive("/") ? "bg-primary/15" : "hover:bg-white/5"}`}>
+              <Home
+                className={`w-6 h-6 transition-colors ${isActive("/") ? "text-primary" : "text-white/40"}`}
+                strokeWidth={isActive("/") ? 2.5 : 1.8}
+              />
+            </div>
+          </Link>
+
+          <Link href="/explore" className="flex flex-col items-center gap-1" data-testid="nav-market">
+            <div className={`p-2 rounded-2xl transition-colors ${isActive("/explore") ? "bg-primary/15" : "hover:bg-white/5"}`}>
+              <Store
+                className={`w-6 h-6 transition-colors ${isActive("/explore") ? "text-primary" : "text-white/40"}`}
+                strokeWidth={isActive("/explore") ? 2.5 : 1.8}
+              />
+            </div>
+          </Link>
+
+          {/* Floating center create button */}
+          <Link href="/sell" data-testid="nav-sell">
+            <div className="relative -top-4 bg-primary text-primary-foreground w-14 h-14 rounded-full flex items-center justify-center shadow-2xl shadow-primary/40 hover:shadow-primary/60 transition-all hover:scale-105 active:scale-95">
+              <Plus className="w-7 h-7" strokeWidth={2.5} />
+            </div>
+          </Link>
+
+          <Link href="/notifications" className="flex flex-col items-center gap-1" data-testid="nav-notifications">
+            <div className={`relative p-2 rounded-2xl transition-colors ${isActive("/notifications") ? "bg-primary/15" : "hover:bg-white/5"}`}>
+              <Bell
+                className={`w-6 h-6 transition-colors ${isActive("/notifications") ? "text-primary" : "text-white/40"}`}
+                strokeWidth={isActive("/notifications") ? 2.5 : 1.8}
+              />
+              {/* Notification dot */}
+              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-[#0d0d0d]" />
+            </div>
+          </Link>
+
+          <Link href="/profile" className="flex flex-col items-center gap-1" data-testid="nav-profile">
+            <div className={`p-2 rounded-2xl transition-colors ${isActive("/profile") ? "bg-primary/15" : "hover:bg-white/5"}`}>
+              <User
+                className={`w-6 h-6 transition-colors ${isActive("/profile") ? "text-primary" : "text-white/40"}`}
+                strokeWidth={isActive("/profile") ? 2.5 : 1.8}
+              />
+            </div>
+          </Link>
+
+        </div>
       </nav>
     </>
   );
