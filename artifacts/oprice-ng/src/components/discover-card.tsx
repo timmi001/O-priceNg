@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Heart, MessageCircle, Share2, Bookmark, BadgeCheck, MapPin, Clock } from "lucide-react";
+import { MessageCircle, Share2, Bookmark, BadgeCheck, MapPin, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
 import { useWatchListing } from "@workspace/api-client-react";
@@ -39,8 +39,6 @@ interface DiscoverCardProps {
 }
 
 export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(listing.offerCount || 0);
   const [isSaved, setIsSaved] = useState(listing.isWatched || false);
   const [savedCount, setSavedCount] = useState(listing.watchCount || 0);
   const watchListing = useWatchListing();
@@ -65,12 +63,6 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
         toast.error("Failed to save");
       }
     });
-  };
-
-  const handleLike = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsLiked(p => !p);
-    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
   };
 
   const handleShare = (e: React.MouseEvent) => {
@@ -180,13 +172,6 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
               </div>
             </Link>
 
-            <button
-              onClick={e => e.stopPropagation()}
-              className="text-[12px] font-semibold text-primary border border-primary/30 px-3 py-1 rounded-full hover:bg-primary/10 transition-colors"
-              data-testid={`button-follow-${listing.id}`}
-            >
-              Follow
-            </button>
           </div>
 
           {/* Title */}
@@ -205,15 +190,6 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
 
           {/* Action bar */}
           <div className="flex items-center justify-between border-t border-white/5 pt-2 pb-2">
-            <button
-              onClick={handleLike}
-              className={`flex items-center gap-1.5 transition-colors ${isLiked ? "text-red-500" : "text-white/40 hover:text-red-400"}`}
-              data-testid={`button-like-${listing.id}`}
-            >
-              <Heart className="w-5 h-5" fill={isLiked ? "currentColor" : "none"} />
-              <span className="text-[12px]">{likeCount > 0 ? likeCount : ""}</span>
-            </button>
-
             <button
               onClick={e => e.stopPropagation()}
               className="flex items-center gap-1.5 text-white/40 hover:text-primary transition-colors"
