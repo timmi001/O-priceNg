@@ -1,0 +1,110 @@
+Create a modern, clean mobile marketplace seller profile page inspired by the Google Discover feed aesthetic. The design should be minimal, content-first, card-based, and highly visual with smooth spacing and soft shadows.
+
+🧩 Overall Style
+
+* Google Discover-inspired UI (clean, airy, content-focused)
+* White or light background with subtle gray dividers
+* Soft rounded cards (12–16px radius)
+* Smooth scrolling feed layout
+* High emphasis on product images
+* Modern 2026 mobile UI aesthetic
+* Typography similar to Google Sans (clean, readable, bold headings)
+
+⸻
+
+👤 Header Section (Seller Identity)
+
+At the top, design a compact but strong seller identity block:
+
+* Circular seller avatar (left aligned)
+* Seller name (bold, large text)
+* “Verified Seller” badge (blue check style)
+* Location under name (light gray text)
+* Follow button (primary action, rounded pill)
+* Message / Contact icon button
+* Small stats row:
+    * ⭐ Rating (e.g. 4.8)
+    * 📦 Total sales
+    * ⏱ Response time
+
+⸻
+
+📊 Quick Action Tabs (Sticky Scroll)
+
+Below header, add a sticky horizontal tab bar:
+
+* All Listings
+* Featured
+* New Arrivals
+* Reviews
+* About
+
+Tabs should behave like Google Discover category chips (scrollable horizontally, active state highlighted).
+
+⸻
+
+🛍️ Main Content Feed (Discover Style Product Cards)
+
+Display seller products in a Google Discover-style vertical feed of large cards:
+
+Each product card should include:
+
+* Large product image (dominant visual)
+* Product title (bold, 1–2 lines max)
+* Price (highlighted)
+* Small seller tag (optional redundant but subtle)
+* Location or delivery info (light text)
+* Like / save icon
+* “View details” CTA button (minimal)
+
+Card Style:
+
+* Rounded corners
+* Soft shadow or elevation
+* White card on light gray background
+* Spaced like Google Discover articles
+
+⸻
+
+⭐ Featured Section (Optional Highlight)
+
+Add a “Featured by Seller” section:
+
+* Horizontal scroll carousel
+* Larger cards than normal feed
+* “Best Seller” or “Hot Deal” badges
+
+⸻
+
+📝 About Section (Minimal)
+
+Clean text block:
+
+* Short seller bio (2–3 lines max)
+* Policies (delivery, return)
+* Contact info
+
+⸻
+
+💬 Reviews Section
+
+* Vertical list of review cards
+* Star rating + short comment
+* User avatar + date
+* Clean spacing (no clutter)
+
+⸻
+
+📱 Interaction Design
+
+* Smooth infinite scroll feed
+* Sticky header collapses slightly on scroll
+* Tabs remain visible while scrolling
+* Tap animations are subtle (scale 0.98)
+* Lazy loading images for performance
+
+⸻
+
+🎨 UI Feel Keywords
+
+“Google Discover meets Pinterest marketplace meets modern social commerce app”
