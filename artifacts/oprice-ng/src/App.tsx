@@ -47,7 +47,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
+          <div className="relative mx-auto bg-[#0d0d0d]" style={{ maxWidth: 430, minHeight: "100dvh" }}>
+            <Router />
+          </div>
         </WouterRouter>
         <Toaster />
       </TooltipProvider>
