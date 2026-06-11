@@ -1,81 +1,112 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "wouter";
-import { Search, Mic, Camera, Menu, ShoppingBag, Car, Shirt, Building2, BriefcaseBusiness, Tag, Loader2, Plus } from "lucide-react";
+import {
+  Search, Mic, Camera, Menu,
+  ShoppingBag, Car, Shirt, Building2, BriefcaseBusiness, Tag, Loader2,
+} from "lucide-react";
 import { useGetListings, useGetFeaturedListings } from "@workspace/api-client-react";
-import { DiscoverCard } from "@/components/discover-card";
+import { PinterestCard } from "@/components/pinterest-card";
 import { BottomNav } from "@/components/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
 
 const CATEGORIES = [
   { label: "Electronics", icon: ShoppingBag, color: "#1d3461" },
-  { label: "Vehicles", icon: Car, color: "#2d1b00" },
-  { label: "Fashion", icon: Shirt, color: "#2d0a1a" },
-  { label: "Property", icon: Building2, color: "#0a2d1a" },
-  { label: "Jobs", icon: BriefcaseBusiness, color: "#1a0a2d" },
-  { label: "Deals", icon: Tag, color: "#2d1a00" },
+  { label: "Vehicles",    icon: Car,             color: "#2d1b00" },
+  { label: "Fashion",     icon: Shirt,            color: "#2d0a1a" },
+  { label: "Property",    icon: Building2,        color: "#0a2d1a" },
+  { label: "Jobs",        icon: BriefcaseBusiness, color: "#1a0a2d" },
+  { label: "Deals",       icon: Tag,              color: "#2d1a00" },
 ];
 
+const PAGE_SIZE = 20;
 const SCROLL_THRESHOLD = 50;
 
 export default function Home() {
-  const { data: listingsPage, isLoading } = useGetListings({ limit: 20 });
-  const { data: featuredListings } = useGetFeaturedListings();
+  /* ── data ─────────────────────────────────────────────── */
+  const [page, setPage]         = useState(1);
+  const [allItems, setAllItems] = useState<Listing[]>([]);
+  const [hasMore, setHasMore]   = useState(true);
+  const loadingMore             = useRef(false);
+  const sentinelRef             = useRef<HTMLDivElement>(null);
 
-  const [headerVisible, setHeaderVisible] = useState(true);
-  const [floatingSearchVisible, setFloatingSearchVisible] = useState(false);
-  const lastScrollY = useRef(0);
-  const ticking = useRef(false);
-  const headerRef = useRef<HTMLDivElement>(null);
+  const { data: featuredListings }           = useGetFeaturedListings();
+  const { data: listingsPage, isLoading }    = useGetListings({ limit: PAGE_SIZE, page });
+
+  /* Accumulate pages */
+  useEffect(() => {
+    if (!listingsPage) return;
+    const incoming = listingsPage.listings ?? [];
+    setAllItems(prev => {
+      const existingIds = new Set(prev.map(l => l.id));
+      const fresh = incoming.filter(l => !existingIds.has(l.id));
+      return [...prev, ...fresh];
+    });
+    if (incoming.length < PAGE_SIZE) setHasMore(false);
+    loadingMore.current = false;
+  }, [listingsPage]);
+
+  /* Merge featured (pinned at top) */
+  const featuredIds = new Set((featuredListings ?? []).map(l => l.id));
+  const feed: (Listing & { isSponsored?: boolean })[] = [
+    ...(featuredListings ?? []).map(l => ({ ...l, isSponsored: true as const })),
+    ...allItems.filter(l => !featuredIds.has(l.id)),
+  ];
+
+  /* IntersectionObserver infinite scroll */
+  const loadMore = useCallback(() => {
+    if (loadingMore.current || !hasMore || isLoading) return;
+    loadingMore.current = true;
+    setPage(p => p + 1);
+  }, [hasMore, isLoading]);
 
   useEffect(() => {
-    const container = window;
+    const el = sentinelRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      entries => { if (entries[0].isIntersecting) loadMore(); },
+      { rootMargin: "300px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [loadMore]);
 
+  /* ── scroll-hide header ────────────────────────────────── */
+  const [headerVisible, setHeaderVisible]         = useState(true);
+  const [floatingSearchVisible, setFloatingSearch] = useState(false);
+  const lastScrollY                               = useRef(0);
+  const ticking                                   = useRef(false);
+
+  useEffect(() => {
     const handleScroll = () => {
       if (ticking.current) return;
       ticking.current = true;
-
       requestAnimationFrame(() => {
-        const currentY = window.scrollY;
-        const delta = currentY - lastScrollY.current;
-
+        const cur   = window.scrollY;
+        const delta = cur - lastScrollY.current;
         if (Math.abs(delta) > SCROLL_THRESHOLD) {
-          if (delta > 0) {
-            // scrolling down — hide header, show float
-            setHeaderVisible(false);
-            setFloatingSearchVisible(true);
-          } else {
-            // scrolling up — show header, hide float
-            setHeaderVisible(true);
-            setFloatingSearchVisible(false);
-          }
-          lastScrollY.current = currentY;
+          setHeaderVisible(delta < 0);
+          setFloatingSearch(delta > 0);
+          lastScrollY.current = cur;
         }
-
         ticking.current = false;
       });
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const featuredIds = new Set((featuredListings ?? []).map(l => l.id));
-  const allListings = [
-    ...(featuredListings ?? []).map(l => ({ ...l, isSponsored: true })),
-    ...(listingsPage?.listings ?? []).filter(l => !featuredIds.has(l.id)),
-  ];
-
+  /* ── render ────────────────────────────────────────────── */
   return (
     <div className="min-h-[100dvh] bg-[#0d0d0d] text-foreground">
 
-      {/* ── MAIN HEADER ── sticky, auto-hides on scroll down */}
+      {/* ── MAIN HEADER ── */}
       <div
-        ref={headerRef}
         className="fixed top-0 left-0 right-0 z-40 transition-transform duration-300 ease-in-out will-change-transform"
         style={{ transform: headerVisible ? "translateY(0)" : "translateY(-100%)" }}
       >
         <div className="bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/5 px-4 pt-4 pb-3">
-          {/* Top row: menu + logo + avatar */}
+          {/* Top row */}
           <div className="flex items-center justify-between mb-4">
             <button
               className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/8 transition-colors text-white/60"
@@ -83,9 +114,7 @@ export default function Home() {
             >
               <Menu className="w-5 h-5" />
             </button>
-
             <h1 className="text-[22px] font-black text-primary tracking-tight">O'price Ng</h1>
-
             <Link href="/profile" data-testid="link-profile-avatar">
               <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/60 to-primary/10 border-2 border-primary/30 overflow-hidden" />
             </Link>
@@ -108,7 +137,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Category quick-action chips */}
+          {/* Category chips */}
           <div className="flex gap-2.5 mt-3 overflow-x-auto no-scrollbar pb-0.5">
             {CATEGORIES.map(({ label, icon: Icon, color }) => (
               <Link
@@ -129,7 +158,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── FLOATING COMPACT SEARCH — appears when header hidden ── */}
+      {/* ── FLOATING COMPACT SEARCH ── */}
       <AnimatePresence>
         {floatingSearchVisible && (
           <motion.div
@@ -150,33 +179,64 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* ── FEED ── padded to clear sticky header (~160px) */}
-      <main className="pt-[168px] pb-28">
-        {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            <p className="text-sm text-white/30">Loading your feed…</p>
+      {/* ── FEED ── */}
+      <main className="pt-[168px] pb-28 px-2">
+        {isLoading && feed.length === 0 ? (
+          /* Initial load skeleton */
+          <div
+            className="masonry-grid"
+            style={{ columns: "2", columnGap: "8px" }}
+          >
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
+                key={i}
+                className="break-inside-avoid mb-2.5 rounded-[18px] overflow-hidden bg-[#161616] animate-pulse"
+              >
+                <div
+                  className="w-full bg-white/5"
+                  style={{ aspectRatio: i % 2 === 0 ? "3/4" : "4/5" }}
+                />
+                <div className="p-2.5 space-y-2">
+                  <div className="h-3 bg-white/5 rounded w-2/3" />
+                  <div className="h-2 bg-white/5 rounded w-1/2" />
+                  <div className="h-2 bg-white/5 rounded w-3/4" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
-          <div>
-            {allListings.map((listing, i) => (
-              <DiscoverCard key={`${listing.isSponsored ? "sp" : ""}${listing.id}`} listing={listing} index={i} />
-            ))}
+          <>
+            {/* Pinterest masonry — CSS columns */}
+            <div style={{ columns: "2", columnGap: "8px" }}>
+              {feed.map((listing, i) => (
+                <PinterestCard
+                  key={`${listing.isSponsored ? "sp-" : ""}${listing.id}`}
+                  listing={listing}
+                  index={i}
+                />
+              ))}
+            </div>
 
-            {/* Load more hint */}
-            {allListings.length > 0 && (
-              <div className="flex justify-center py-8">
-                <button className="text-sm text-white/30 flex items-center gap-2 hover:text-primary transition-colors">
-                  <Loader2 className="w-4 h-4" />
-                  Load more listings
-                </button>
+            {/* Infinite scroll sentinel */}
+            <div ref={sentinelRef} className="h-4" />
+
+            {/* Loading more spinner */}
+            {(isLoading && feed.length > 0) && (
+              <div className="flex justify-center py-6">
+                <Loader2 className="w-5 h-5 animate-spin text-primary/50" />
               </div>
             )}
-          </div>
+
+            {/* End of feed */}
+            {!hasMore && feed.length > 0 && (
+              <p className="text-center text-[12px] text-white/20 py-6">
+                You're all caught up ✓
+              </p>
+            )}
+          </>
         )}
       </main>
 
-      {/* ── BOTTOM NAV (auto-hides with same logic) ── */}
       <BottomNav hidden={!headerVisible} />
     </div>
   );
