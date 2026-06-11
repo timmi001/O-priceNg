@@ -63,7 +63,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 pt-6 pb-5 border-b border-white/5">
-              <span className="text-[20px] font-black text-white tracking-tight">O'Price Ng</span>
+              <span className="text-[20px] font-black tracking-tight"><span className="text-white">O'Price</span> <span className="text-primary">Ng</span></span>
               <button
                 onClick={onClose}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-white/6 hover:bg-white/10 transition-colors text-white/50"
