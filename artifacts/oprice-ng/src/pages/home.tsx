@@ -7,6 +7,7 @@ import {
 import { useGetListings, useGetFeaturedListings } from "@workspace/api-client-react";
 import { PinterestCard } from "@/components/pinterest-card";
 import { BottomNav } from "@/components/navigation";
+import { Sidebar } from "@/components/sidebar";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
 
@@ -23,6 +24,8 @@ const PAGE_SIZE = 20;
 const SCROLL_THRESHOLD = 50;
 
 export default function Home() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   /* ── data ─────────────────────────────────────────────── */
   const [page, setPage]         = useState(1);
   const [allItems, setAllItems] = useState<Listing[]>([]);
@@ -100,6 +103,8 @@ export default function Home() {
   return (
     <div className="min-h-[100dvh] bg-[#0d0d0d] text-foreground">
 
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
       {/* ── MAIN HEADER ── */}
       <div
         className="fixed top-0 left-0 right-0 z-40 transition-transform duration-300 ease-in-out will-change-transform"
@@ -109,6 +114,7 @@ export default function Home() {
           {/* Top row */}
           <div className="flex items-center justify-between mb-4">
             <button
+              onClick={() => setSidebarOpen(true)}
               className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/8 transition-colors text-white/60"
               data-testid="button-menu"
             >
