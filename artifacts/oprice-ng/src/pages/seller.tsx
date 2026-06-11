@@ -280,7 +280,7 @@ export default function SellerProfile() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -60, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-0 left-0 right-0 z-50 bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center gap-3"
+            className="fixed top-0 left-0 right-0 md:left-[220px] z-50 bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center gap-3"
           >
             <button onClick={() => window.history.back()} className="w-8 h-8 rounded-full bg-white/6 flex items-center justify-center">
               <ArrowLeft className="w-4 h-4 text-white/60" />

@@ -222,7 +222,7 @@ export default function ListingDetail() {
     <div className="min-h-[100dvh] bg-[#0d0d0d] text-foreground pb-28">
 
       {/* ── FLOATING CONTROLS on image ── */}
-      <div className="fixed top-0 left-0 right-0 z-50 px-4 pt-5 flex items-center justify-between pointer-events-none">
+      <div className="fixed top-0 left-0 right-0 md:left-[220px] z-50 px-4 pt-5 flex items-center justify-between pointer-events-none">
         <button
           onClick={() => navigate("/")}
           className="w-10 h-10 bg-black/55 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg pointer-events-auto"

@@ -44,12 +44,12 @@ export function BottomNav({ hidden = false }: BottomNavProps) {
 
   return (
     <>
-      {/* Page spacer so content isn't hidden behind the nav */}
-      <div className="h-24" />
+      {/* Page spacer so content isn't hidden behind the nav — hidden on desktop */}
+      <div className="h-24 md:hidden" />
 
       <nav
         aria-label="Main navigation"
-        className="fixed bottom-0 left-0 right-0 z-40 transition-transform duration-300 ease-in-out will-change-transform"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 transition-transform duration-300 ease-in-out will-change-transform"
         style={{ transform: hidden ? "translateY(110%)" : "translateY(0)" }}
       >
         {/* ── Notched bar ── */}

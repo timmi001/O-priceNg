@@ -107,7 +107,7 @@ export default function Home() {
 
       {/* ── MAIN HEADER ── */}
       <div
-        className="fixed top-0 left-0 right-0 z-40 transition-transform duration-300 ease-in-out will-change-transform"
+        className="fixed top-0 left-0 right-0 md:left-[220px] z-40 transition-transform duration-300 ease-in-out will-change-transform"
         style={{ transform: headerVisible ? "translateY(0)" : "translateY(-100%)" }}
       >
         <div className="bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/5 px-4 pt-4 pb-3">
@@ -115,11 +115,12 @@ export default function Home() {
           <div className="flex items-center justify-between mb-4">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/8 transition-colors text-white/60"
+              className="md:hidden w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/8 transition-colors text-white/60"
               data-testid="button-menu"
             >
               <Menu className="w-5 h-5" />
             </button>
+            <div className="hidden md:block w-9 h-9" />
             <h1 className="text-[22px] font-black text-primary tracking-tight">O'price Ng</h1>
             <Link href="/profile" data-testid="link-profile-avatar">
               <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/60 to-primary/10 border-2 border-primary/30 overflow-hidden" />
@@ -172,7 +173,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-3 left-4 right-4 z-50"
+            className="fixed top-3 left-4 right-4 md:left-[228px] z-50"
           >
             <Link href="/explore">
               <div className="flex items-center gap-3 bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/12 rounded-2xl px-4 py-3 shadow-2xl shadow-black/60">
@@ -190,8 +191,8 @@ export default function Home() {
         {isLoading && feed.length === 0 ? (
           /* Initial load skeleton */
           <div
-            className="masonry-grid"
-            style={{ columns: "2", columnGap: "8px" }}
+            className="columns-2 md:columns-3 lg:columns-4"
+            style={{ columnGap: "8px" }}
           >
             {Array.from({ length: 8 }).map((_, i) => (
               <div
@@ -213,7 +214,7 @@ export default function Home() {
         ) : (
           <>
             {/* Pinterest masonry — CSS columns */}
-            <div style={{ columns: "2", columnGap: "8px" }}>
+            <div className="columns-2 md:columns-3 lg:columns-4" style={{ columnGap: "8px" }}>
               {feed.map((listing, i) => (
                 <PinterestCard
                   key={`${listing.isSponsored ? "sp-" : ""}${listing.id}`}

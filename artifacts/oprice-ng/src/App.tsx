@@ -14,12 +14,13 @@ import Chat from "@/pages/chat";
 import ListingDetail from "@/pages/listing";
 import SellerProfile from "@/pages/seller";
 import Categories from "@/pages/categories";
+import { DesktopNav } from "@/components/desktop-nav";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5, // 5 minutes
+      staleTime: 1000 * 60 * 5,
     },
   },
 });
@@ -47,7 +48,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <div className="relative mx-auto bg-[#0d0d0d]" style={{ maxWidth: 430, minHeight: "100dvh" }}>
+          <DesktopNav />
+          <div className="md:pl-[220px]">
             <Router />
           </div>
         </WouterRouter>
