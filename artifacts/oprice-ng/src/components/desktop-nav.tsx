@@ -38,7 +38,7 @@ export function DesktopNav() {
       {/* Logo */}
       <div className="px-5 pt-6 pb-5 border-b border-white/5">
         <Link href="/">
-          <span className="text-[22px] font-black text-primary tracking-tight">O'price Ng</span>
+          <span className="text-[22px] font-black text-white tracking-tight">O'Price Ng</span>
           <p className="text-[11px] text-white/25 font-medium mt-0.5">Nigerian Marketplace</p>
         </Link>
       </div>

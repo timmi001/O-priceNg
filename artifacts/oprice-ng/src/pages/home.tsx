@@ -121,7 +121,7 @@ export default function Home() {
               <Menu className="w-5 h-5" />
             </button>
             <div className="hidden md:block w-9 h-9" />
-            <h1 className="text-[22px] font-black text-primary tracking-tight">O'price Ng</h1>
+            <h1 className="text-[22px] font-black text-white tracking-tight">O'Price Ng</h1>
             <Link href="/profile" data-testid="link-profile-avatar">
               <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/60 to-primary/10 border-2 border-primary/30 overflow-hidden" />
             </Link>
