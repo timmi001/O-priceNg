@@ -64,7 +64,7 @@ function FeaturedCard({ listing, badge }: { listing: Listing; badge?: string }) 
       className="shrink-0 w-[200px] cursor-pointer"
       data-testid={`featured-card-${listing.id}`}
     >
-      <div className="rounded-3xl overflow-hidden bg-[#161616] shadow-xl shadow-black/40">
+      <div className="rounded-3xl overflow-hidden bg-white dark:bg-[#161616] shadow-md dark:shadow-xl shadow-black/10 dark:shadow-black/40">
         <div className="relative w-full aspect-[4/3] overflow-hidden" style={{ backgroundColor: bg }}>
           <div className={`absolute inset-0 bg-gradient-to-br ${grad}`} />
           {listing.images?.[0] && (
@@ -82,8 +82,8 @@ function FeaturedCard({ listing, badge }: { listing: Listing; badge?: string }) 
           </div>
         </div>
         <div className="px-3 py-2.5">
-          <p className="text-[12px] font-bold text-white line-clamp-2 leading-snug mb-1">{listing.title}</p>
-          <p className="text-[10px] text-white/30 flex items-center gap-1">
+          <p className="text-[12px] font-bold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1">{listing.title}</p>
+          <p className="text-[10px] text-gray-400 dark:text-white/30 flex items-center gap-1">
             <MapPin className="w-2.5 h-2.5" />{listing.location}
           </p>
         </div>
@@ -103,7 +103,7 @@ function DiscoverFeedCard({ listing }: { listing: Listing }) {
     <motion.div
       whileTap={{ scale: 0.98 }}
       onClick={() => nav(`/listing/${listing.id}`)}
-      className="bg-[#161616] rounded-3xl overflow-hidden shadow-lg shadow-black/30 cursor-pointer mb-3"
+      className="bg-white dark:bg-[#161616] rounded-3xl overflow-hidden shadow-sm dark:shadow-lg shadow-black/5 dark:shadow-black/30 cursor-pointer mb-3"
       data-testid={`feed-card-${listing.id}`}
     >
       {/* Image */}
@@ -135,9 +135,9 @@ function DiscoverFeedCard({ listing }: { listing: Listing }) {
 
       {/* Body */}
       <div className="px-4 pt-3 pb-4">
-        <h3 className="text-[16px] font-bold text-white leading-snug line-clamp-2 mb-2">{listing.title}</h3>
+        <h3 className="text-[16px] font-bold text-gray-900 dark:text-white leading-snug line-clamp-2 mb-2">{listing.title}</h3>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 text-[11px] text-white/30">
+          <div className="flex items-center gap-3 text-[11px] text-gray-400 dark:text-white/30">
             <span className="flex items-center gap-1">
               <MapPin className="w-3 h-3" />{listing.location}
             </span>
@@ -174,19 +174,19 @@ function Stars({ n, size = 3.5 }: { n: number; size?: number }) {
 function ReviewCard({ r }: { r: typeof MOCK_REVIEWS[0] }) {
   const initials = r.name.split(" ").map(w => w[0]).join("").slice(0, 2);
   return (
-    <div className="bg-[#161616] rounded-2xl p-4">
+    <div className="bg-white dark:bg-[#161616] rounded-2xl p-4 shadow-sm dark:shadow-none">
       <div className="flex items-start gap-3">
         <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/40 to-primary/10 flex items-center justify-center shrink-0">
           <span className="text-[12px] font-black text-primary">{initials}</span>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2 mb-1">
-            <span className="text-[13px] font-bold text-white">{r.name}</span>
-            <span className="text-[10px] text-white/25 shrink-0">{format(new Date(r.date), "MMM d, yyyy")}</span>
+            <span className="text-[13px] font-bold text-gray-900 dark:text-white">{r.name}</span>
+            <span className="text-[10px] text-gray-400 dark:text-white/25 shrink-0">{format(new Date(r.date), "MMM d, yyyy")}</span>
           </div>
           <Stars n={r.rating} />
-          <p className="text-[13px] text-white/55 leading-relaxed mt-2">{r.text}</p>
-          <button className="mt-2 flex items-center gap-1 text-[11px] text-white/25 hover:text-primary transition-colors">
+          <p className="text-[13px] text-gray-500 dark:text-white/55 leading-relaxed mt-2">{r.text}</p>
+          <button className="mt-2 flex items-center gap-1 text-[11px] text-gray-400 dark:text-white/25 hover:text-primary transition-colors">
             <ThumbsUp className="w-3 h-3" /> Helpful
           </button>
         </div>
@@ -198,11 +198,11 @@ function ReviewCard({ r }: { r: typeof MOCK_REVIEWS[0] }) {
 /* ── mini stat ───────────────────────────────────────────── */
 function MiniStat({ icon: Icon, value, label }: { icon: React.ElementType; value: string; label: string }) {
   return (
-    <div className="flex items-center gap-2 bg-white/5 rounded-2xl px-3 py-2.5">
+    <div className="flex items-center gap-2 bg-black/5 dark:bg-white/5 rounded-2xl px-3 py-2.5">
       <Icon className="w-4 h-4 text-primary shrink-0" />
       <div>
-        <p className="text-[14px] font-black text-white leading-none">{value}</p>
-        <p className="text-[10px] text-white/30 mt-0.5">{label}</p>
+        <p className="text-[14px] font-black text-gray-900 dark:text-white leading-none">{value}</p>
+        <p className="text-[10px] text-gray-400 dark:text-white/30 mt-0.5">{label}</p>
       </div>
     </div>
   );
@@ -246,13 +246,13 @@ export default function SellerProfile() {
   /* ── Loading ── */
   if (loadingProfile) {
     return (
-      <div className="min-h-[100dvh] bg-[#0d0d0d]">
+      <div className="min-h-[100dvh] bg-[#f8f9fa] dark:bg-[#0d0d0d]">
         <div className="h-2 w-full bg-primary/30 animate-pulse" />
         <div className="px-4 pt-6 flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-white/8 animate-pulse shrink-0" />
+          <div className="w-16 h-16 rounded-2xl bg-black/8 dark:bg-white/8 animate-pulse shrink-0" />
           <div className="flex-1 space-y-2">
-            <div className="h-5 bg-white/8 rounded w-2/3 animate-pulse" />
-            <div className="h-3 bg-white/5 rounded w-1/2 animate-pulse" />
+            <div className="h-5 bg-black/8 dark:bg-white/8 rounded w-2/3 animate-pulse" />
+            <div className="h-3 bg-black/5 dark:bg-white/5 rounded w-1/2 animate-pulse" />
           </div>
         </div>
       </div>
@@ -261,7 +261,7 @@ export default function SellerProfile() {
 
   if (!profile) {
     return (
-      <div className="min-h-[100dvh] bg-[#0d0d0d] flex flex-col items-center justify-center gap-3 text-white/30">
+      <div className="min-h-[100dvh] bg-[#f8f9fa] dark:bg-[#0d0d0d] flex flex-col items-center justify-center gap-3 text-gray-400 dark:text-white/30">
         <Package className="w-10 h-10 opacity-20" />
         <p className="font-semibold">Seller not found</p>
         <button onClick={() => nav("/")} className="text-primary text-sm font-bold">Go home</button>
@@ -270,7 +270,7 @@ export default function SellerProfile() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-[#0d0d0d] text-foreground pb-16">
+    <div className="min-h-[100dvh] bg-[#f8f9fa] dark:bg-[#0d0d0d] text-foreground pb-16">
 
       {/* ── STICKY COLLAPSED MINI-HEADER ── appears on scroll ── */}
       <AnimatePresence>
@@ -280,20 +280,20 @@ export default function SellerProfile() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -60, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-0 left-0 right-0 md:left-[220px] z-50 bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center gap-3"
+            className="fixed top-0 left-0 right-0 md:left-[220px] z-50 bg-[#f8f9fa]/95 dark:bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-black/6 dark:border-white/5 px-4 py-3 flex items-center gap-3"
           >
-            <button onClick={() => window.history.back()} className="w-8 h-8 rounded-full bg-white/6 flex items-center justify-center">
-              <ArrowLeft className="w-4 h-4 text-white/60" />
+            <button onClick={() => window.history.back()} className="w-8 h-8 rounded-full bg-black/6 dark:bg-white/6 flex items-center justify-center">
+              <ArrowLeft className="w-4 h-4 text-gray-600 dark:text-white/60" />
             </button>
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/50 to-primary/10 overflow-hidden shrink-0">
               {profile.avatar && <img src={profile.avatar} alt={profile.name} className="w-full h-full object-cover" />}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[14px] font-black text-white truncate flex items-center gap-1">
+              <p className="text-[14px] font-black text-gray-900 dark:text-white truncate flex items-center gap-1">
                 {profile.name}
                 {profile.isVerified && <BadgeCheck className="w-3.5 h-3.5 text-primary shrink-0" />}
               </p>
-              <p className="text-[10px] text-white/30">@{profile.username}</p>
+              <p className="text-[10px] text-gray-400 dark:text-white/30">@{profile.username}</p>
             </div>
             <button
               onClick={() => { nav("/messages"); toast.success("Opening messages…"); }}
@@ -312,10 +312,10 @@ export default function SellerProfile() {
         <div className="flex items-start gap-4 mb-5">
           <button
             onClick={() => window.history.back()}
-            className="w-9 h-9 rounded-full bg-white/6 flex items-center justify-center mt-1 shrink-0"
+            className="w-9 h-9 rounded-full bg-black/6 dark:bg-white/6 flex items-center justify-center mt-1 shrink-0"
             data-testid="button-back"
           >
-            <ArrowLeft className="w-4 h-4 text-white/60" />
+            <ArrowLeft className="w-4 h-4 text-gray-600 dark:text-white/60" />
           </button>
 
           {/* Avatar */}
@@ -329,7 +329,7 @@ export default function SellerProfile() {
               }
             </div>
             {profile.isVerified && (
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full border-2 border-[#0d0d0d] flex items-center justify-center">
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full border-2 border-background flex items-center justify-center">
                 <BadgeCheck className="w-3.5 h-3.5 text-primary-foreground" />
               </div>
             )}
@@ -338,17 +338,17 @@ export default function SellerProfile() {
           {/* Name + meta */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-0.5">
-              <h1 className="text-[20px] font-black text-white leading-tight">{profile.name}</h1>
+              <h1 className="text-[20px] font-black text-gray-900 dark:text-white leading-tight">{profile.name}</h1>
               {profile.isVerified && (
                 <span className="flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full">
                   <BadgeCheck className="w-3 h-3" /> Verified
                 </span>
               )}
             </div>
-            <p className="text-[12px] text-white/35 mb-1">@{profile.username}</p>
-            <div className="flex items-center gap-2 text-[11px] text-white/25 flex-wrap">
+            <p className="text-[12px] text-gray-500 dark:text-white/35 mb-1">@{profile.username}</p>
+            <div className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-white/25 flex-wrap">
               <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{profile.location}</span>
-              <span className="w-1 h-1 rounded-full bg-white/15" />
+              <span className="w-1 h-1 rounded-full bg-black/15 dark:bg-white/15" />
               <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />Joined {joinedAgo} ago</span>
             </div>
           </div>
@@ -363,7 +363,7 @@ export default function SellerProfile() {
 
         {/* Bio (if present) */}
         {profile.bio && (
-          <p className="text-[13px] text-white/45 leading-relaxed mb-4">{profile.bio}</p>
+          <p className="text-[13px] text-gray-500 dark:text-white/45 leading-relaxed mb-4">{profile.bio}</p>
         )}
 
         {/* Message + Contact buttons */}
@@ -377,7 +377,7 @@ export default function SellerProfile() {
           </button>
           <button
             onClick={() => toast.info("Call feature coming soon!")}
-            className="w-12 h-12 rounded-2xl bg-white/6 border border-white/8 flex items-center justify-center text-white/50 hover:bg-white/10 transition-colors"
+            className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/6 border border-black/8 dark:border-white/8 flex items-center justify-center text-gray-500 dark:text-white/50 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
             data-testid="button-call"
           >
             <Phone className="w-4 h-4" />
@@ -391,7 +391,7 @@ export default function SellerProfile() {
       {/* ── STICKY TABS ── */}
       <div
         ref={tabBarRef}
-        className="sticky top-0 z-40 bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/5 px-4 py-3"
+        className="sticky top-0 z-40 bg-[#f8f9fa]/95 dark:bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-black/6 dark:border-white/5 px-4 py-3"
       >
         <div className="flex gap-2 overflow-x-auto no-scrollbar">
           {TABS.map(({ key, label }) => (
@@ -401,7 +401,7 @@ export default function SellerProfile() {
               className={`shrink-0 px-4 py-2 rounded-full text-[13px] font-bold transition-all duration-200 ${
                 tab === key
                   ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-                  : "bg-white/5 text-white/40 border border-white/8 hover:bg-white/10"
+                  : "bg-black/5 dark:bg-white/5 text-gray-400 dark:text-white/40 border border-black/8 dark:border-white/8 hover:bg-black/10 dark:hover:bg-white/10"
               }`}
               data-testid={`tab-${key}`}
             >
@@ -442,7 +442,7 @@ export default function SellerProfile() {
               {(featured ?? []).length > 0 && (
                 <div className="mb-5">
                   <div className="flex items-center justify-between px-4 mb-3">
-                    <p className="text-[13px] font-black text-white/60 uppercase tracking-wider">
+                    <p className="text-[13px] font-black text-gray-400 dark:text-white/60 uppercase tracking-wider">
                       🔥 Hot Deals
                     </p>
                     <span className="text-[11px] text-primary font-bold flex items-center gap-1">
@@ -459,7 +459,7 @@ export default function SellerProfile() {
 
               {/* Featured full list */}
               <div className="px-4">
-                <p className="text-[13px] font-black text-white/60 uppercase tracking-wider mb-3">
+                <p className="text-[13px] font-black text-gray-400 dark:text-white/60 uppercase tracking-wider mb-3">
                   <Sparkles className="w-3.5 h-3.5 inline mr-1.5 text-primary" />
                   Seller's Picks
                 </p>
@@ -477,7 +477,7 @@ export default function SellerProfile() {
           {/* NEW ARRIVALS */}
           {tab === "new" && (
             <div className="px-4">
-              <p className="text-[12px] text-white/25 mb-3">Latest items from {profile.name}</p>
+              <p className="text-[12px] text-gray-400 dark:text-white/25 mb-3">Latest items from {profile.name}</p>
               {loadingListings ? <ListingsSkeleton /> : !newArrivals.length ? (
                 <EmptyState icon={Sparkles} title="No new arrivals yet" />
               ) : (
@@ -490,12 +490,12 @@ export default function SellerProfile() {
           {tab === "reviews" && (
             <div className="px-4">
               {/* Summary */}
-              <div className="bg-[#161616] rounded-3xl p-4 mb-4">
+              <div className="bg-white dark:bg-[#161616] rounded-3xl p-4 mb-4 shadow-sm dark:shadow-none">
                 <div className="flex items-center gap-5">
                   <div className="text-center">
-                    <p className="text-[44px] font-black text-white leading-none">{avgRating.toFixed(1)}</p>
+                    <p className="text-[44px] font-black text-gray-900 dark:text-white leading-none">{avgRating.toFixed(1)}</p>
                     <Stars n={Math.round(avgRating)} size={4} />
-                    <p className="text-[11px] text-white/25 mt-1">{MOCK_REVIEWS.length} reviews</p>
+                    <p className="text-[11px] text-gray-400 dark:text-white/25 mt-1">{MOCK_REVIEWS.length} reviews</p>
                   </div>
                   <div className="flex-1 space-y-1.5">
                     {[5, 4, 3, 2, 1].map(s => {
@@ -503,8 +503,8 @@ export default function SellerProfile() {
                       const pct   = (count / MOCK_REVIEWS.length) * 100;
                       return (
                         <div key={s} className="flex items-center gap-2">
-                          <span className="text-[11px] text-white/30 w-3 shrink-0">{s}</span>
-                          <div className="flex-1 h-1.5 bg-white/8 rounded-full overflow-hidden">
+                          <span className="text-[11px] text-gray-400 dark:text-white/30 w-3 shrink-0">{s}</span>
+                          <div className="flex-1 h-1.5 bg-black/8 dark:bg-white/8 rounded-full overflow-hidden">
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: `${pct}%` }}
@@ -512,7 +512,7 @@ export default function SellerProfile() {
                               className="h-full bg-amber-400 rounded-full"
                             />
                           </div>
-                          <span className="text-[10px] text-white/20 w-3 text-right">{count}</span>
+                          <span className="text-[10px] text-gray-300 dark:text-white/20 w-3 text-right">{count}</span>
                         </div>
                       );
                     })}
@@ -531,12 +531,12 @@ export default function SellerProfile() {
           {tab === "about" && (
             <div className="px-4 space-y-3">
               {/* Bio */}
-              <div className="bg-[#161616] rounded-3xl p-4">
-                <p className="text-[11px] font-bold text-white/30 uppercase tracking-wider mb-2.5">About</p>
-                <p className="text-[14px] text-white/60 leading-relaxed">
+              <div className="bg-white dark:bg-[#161616] rounded-3xl p-4 shadow-sm dark:shadow-none">
+                <p className="text-[11px] font-bold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-2.5">About</p>
+                <p className="text-[14px] text-gray-600 dark:text-white/60 leading-relaxed">
                   {profile.bio ?? "This seller hasn't added a bio yet."}
                 </p>
-                <div className="flex items-center gap-2 mt-3 text-[12px] text-white/30">
+                <div className="flex items-center gap-2 mt-3 text-[12px] text-gray-400 dark:text-white/30">
                   <Calendar className="w-3.5 h-3.5" />
                   Member since {format(new Date(profile.joinDate), "MMMM yyyy")}
                 </div>
@@ -548,13 +548,13 @@ export default function SellerProfile() {
                 { icon: RotateCcw,  title: "Returns",   body: "7-day return policy on all items. Item must be in original condition." },
                 { icon: Shield,     title: "Guarantee", body: "All listings are genuine and as described. Message before buying for more details." },
               ].map(({ icon: Icon, title, body }) => (
-                <div key={title} className="bg-[#161616] rounded-3xl p-4 flex items-start gap-3">
+                <div key={title} className="bg-white dark:bg-[#161616] rounded-3xl p-4 flex items-start gap-3 shadow-sm dark:shadow-none">
                   <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
                     <Icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-[14px] font-bold text-white mb-1">{title}</p>
-                    <p className="text-[13px] text-white/40 leading-relaxed">{body}</p>
+                    <p className="text-[14px] font-bold text-gray-900 dark:text-white mb-1">{title}</p>
+                    <p className="text-[13px] text-gray-500 dark:text-white/40 leading-relaxed">{body}</p>
                   </div>
                 </div>
               ))}
@@ -580,11 +580,11 @@ function ListingsSkeleton() {
   return (
     <div className="space-y-3">
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="rounded-3xl bg-[#161616] animate-pulse overflow-hidden">
-          <div className="aspect-[16/9] bg-white/5" />
+        <div key={i} className="rounded-3xl bg-white dark:bg-[#161616] animate-pulse overflow-hidden shadow-sm dark:shadow-none">
+          <div className="aspect-[16/9] bg-black/5 dark:bg-white/5" />
           <div className="p-4 space-y-2">
-            <div className="h-4 bg-white/5 rounded w-3/4" />
-            <div className="h-3 bg-white/5 rounded w-1/2" />
+            <div className="h-4 bg-black/5 dark:bg-white/5 rounded w-3/4" />
+            <div className="h-3 bg-black/5 dark:bg-white/5 rounded w-1/2" />
           </div>
         </div>
       ))}
@@ -594,8 +594,8 @@ function ListingsSkeleton() {
 
 function EmptyState({ icon: Icon, title }: { icon: React.ElementType; title: string }) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 gap-3 text-white/25">
-      <div className="w-14 h-14 rounded-3xl bg-white/4 flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-400 dark:text-white/25">
+      <div className="w-14 h-14 rounded-3xl bg-black/4 dark:bg-white/4 flex items-center justify-center">
         <Icon className="w-6 h-6 opacity-40" />
       </div>
       <p className="text-[14px] font-bold">{title}</p>

@@ -4,6 +4,7 @@ import {
   ShoppingBag, Car, Shirt, Building2, BriefcaseBusiness, Tag,
   Bell, Settings, HelpCircle,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV_LINKS = [
   { href: "/",         icon: Home,          label: "Home"      },
@@ -33,13 +34,16 @@ export function DesktopNav() {
   const isActive = (path: string) => location === path;
 
   return (
-    <aside className="hidden md:flex flex-col fixed left-0 top-0 bottom-0 w-[220px] bg-[#0d0d0d] border-r border-white/6 z-30 overflow-y-auto">
+    <aside className="hidden md:flex flex-col fixed left-0 top-0 bottom-0 w-[220px] bg-white dark:bg-[#0d0d0d] border-r border-black/8 dark:border-white/6 z-30 overflow-y-auto">
 
       {/* Logo */}
-      <div className="px-5 pt-6 pb-5 border-b border-white/5">
+      <div className="px-5 pt-6 pb-4 border-b border-black/6 dark:border-white/5">
         <Link href="/">
-          <span className="text-[22px] font-black tracking-tight"><span className="text-white">O'Price</span> <span className="text-primary">Ng</span></span>
-          <p className="text-[11px] text-white/25 font-medium mt-0.5">Nigerian Marketplace</p>
+          <span className="text-[22px] font-black tracking-tight">
+            <span className="text-gray-900 dark:text-white">O'Price</span>{" "}
+            <span className="text-primary">Ng</span>
+          </span>
+          <p className="text-[11px] text-gray-400 dark:text-white/25 font-medium mt-0.5">Nigerian Marketplace</p>
         </Link>
       </div>
 
@@ -55,7 +59,7 @@ export function DesktopNav() {
 
       {/* Main nav */}
       <nav className="px-2 pb-2 flex-1">
-        <p className="px-3 pt-3 pb-1.5 text-[10px] font-bold text-white/20 uppercase tracking-widest">Menu</p>
+        <p className="px-3 pt-3 pb-1.5 text-[10px] font-bold text-gray-400 dark:text-white/20 uppercase tracking-widest">Menu</p>
         {NAV_LINKS.map(({ href, icon: Icon, label }) => {
           const active = isActive(href);
           return (
@@ -63,14 +67,14 @@ export function DesktopNav() {
               <div className={`flex items-center gap-3 px-3 py-2.5 rounded-xl mb-0.5 transition-all duration-150 ${
                 active
                   ? "bg-primary/12 text-primary"
-                  : "text-white/45 hover:text-white/80 hover:bg-white/5"
+                  : "text-gray-500 dark:text-white/45 hover:text-gray-800 dark:hover:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
               }`}>
                 <Icon
                   className="w-5 h-5 shrink-0"
                   strokeWidth={active ? 2.5 : 1.8}
                   fill={active && href === "/saved" ? "currentColor" : "none"}
                 />
-                <span className={`text-[13px] font-${active ? "black" : "semibold"}`}>{label}</span>
+                <span className={`text-[13px] ${active ? "font-black" : "font-semibold"}`}>{label}</span>
                 {active && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />}
               </div>
             </Link>
@@ -78,10 +82,10 @@ export function DesktopNav() {
         })}
 
         {/* Categories */}
-        <p className="px-3 pt-4 pb-1.5 text-[10px] font-bold text-white/20 uppercase tracking-widest">Categories</p>
+        <p className="px-3 pt-4 pb-1.5 text-[10px] font-bold text-gray-400 dark:text-white/20 uppercase tracking-widest">Categories</p>
         {CATEGORIES.map(({ href, icon: Icon, label, color }) => (
           <Link key={label} href={href}>
-            <div className="flex items-center gap-3 px-3 py-2 rounded-xl mb-0.5 text-white/45 hover:text-white/80 hover:bg-white/5 transition-all duration-150">
+            <div className="flex items-center gap-3 px-3 py-2 rounded-xl mb-0.5 text-gray-500 dark:text-white/45 hover:text-gray-800 dark:hover:text-white/80 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-150">
               <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: color + "cc" }}>
                 <Icon className="w-3.5 h-3.5 text-white/80" />
               </div>
@@ -91,16 +95,22 @@ export function DesktopNav() {
         ))}
       </nav>
 
-      {/* Bottom utility links */}
-      <div className="px-2 pb-6 border-t border-white/5 pt-3">
+      {/* Bottom utility links + theme toggle */}
+      <div className="px-2 pb-4 border-t border-black/6 dark:border-white/5 pt-3">
         {BOTTOM_LINKS.map(({ href, icon: Icon, label }) => (
           <Link key={label} href={href}>
-            <div className="flex items-center gap-3 px-3 py-2 rounded-xl mb-0.5 text-white/30 hover:text-white/60 hover:bg-white/5 transition-all duration-150">
+            <div className="flex items-center gap-3 px-3 py-2 rounded-xl mb-0.5 text-gray-400 dark:text-white/30 hover:text-gray-700 dark:hover:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-150">
               <Icon className="w-4 h-4 shrink-0" strokeWidth={1.8} />
               <span className="text-[12px] font-semibold">{label}</span>
             </div>
           </Link>
         ))}
+
+        {/* Theme toggle row */}
+        <div className="flex items-center gap-3 px-3 py-2.5 mt-1">
+          <span className="text-[12px] font-semibold text-gray-400 dark:text-white/30 flex-1">Dark mode</span>
+          <ThemeToggle />
+        </div>
       </div>
     </aside>
   );

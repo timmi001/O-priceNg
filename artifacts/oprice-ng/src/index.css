@@ -66,53 +66,107 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-:root, .dark {
-  --button-outline: rgba(255,255,255, .10);
-  --badge-outline: rgba(255,255,255, .05);
-
+/* ── Light mode (default) ───────────────────────────────── */
+:root {
+  --button-outline: rgba(0,0,0,.10);
+  --badge-outline: rgba(0,0,0,.05);
   --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(0,0,0,.04);
+  --elevate-2: rgba(0,0,0,.08);
 
-  --elevate-1: rgba(255,255,255, .04);
-  --elevate-2: rgba(255,255,255, .09);
+  --background: 210 17% 98%;       /* #f6f8fa */
+  --foreground: 220 9% 11%;        /* #1a1b1e */
 
-  /* Custom palette */
-  --background: 0 0% 0%; /* #000000 */
-  --foreground: 0 0% 100%; /* #ffffff */
-  
-  --card: 210 11.5% 9.6%; /* #16181c */
-  --card-foreground: 0 0% 100%;
-  --card-border: 206 7.1% 19.8%; /* #2f3336 */
-  
-  --popover: 210 11.5% 9.6%;
-  --popover-foreground: 0 0% 100%;
-  --popover-border: 206 7.1% 19.8%;
-  
-  --primary: 137 51% 74%; /* #99dead */
+  --card: 0 0% 100%;               /* #ffffff */
+  --card-foreground: 220 9% 11%;
+  --card-border: 220 13% 91%;      /* #e5e7eb */
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 9% 11%;
+  --popover-border: 220 13% 91%;
+
+  --primary: 137 51% 74%;          /* #99dead */
   --primary-foreground: 0 0% 0%;
-  
-  --secondary: 206 7.1% 19.8%; /* border as secondary */
-  --secondary-foreground: 210 12% 59.6%; /* #8b98a5 */
-  
-  --muted: 210 11.5% 9.6%;
-  --muted-foreground: 210 12% 59.6%; /* #8b98a5 */
-  
-  --accent: 206 7.1% 19.8%;
-  --accent-foreground: 0 0% 100%;
-  
+
+  --secondary: 220 13% 91%;
+  --secondary-foreground: 220 9% 40%;
+
+  --muted: 210 17% 95%;
+  --muted-foreground: 220 9% 46%;  /* #6b7280 */
+
+  --accent: 220 13% 95%;
+  --accent-foreground: 220 9% 11%;
+
   --destructive: 0 100% 50%;
   --destructive-foreground: 0 0% 100%;
-  
-  --border: 206 7.1% 19.8%; /* #2f3336 */
-  --input: 206 7.1% 19.8%;
-  --ring: 137 51% 74%; /* #99dead */
-  
-  --success: 160 100% 36.5%; /* #00ba7c */
-  --warning: 38 100% 56.1%; /* #ffad1f */
+
+  --border: 220 13% 91%;           /* #e5e7eb */
+  --input: 220 13% 91%;
+  --ring: 137 51% 74%;
+
+  --success: 160 100% 36.5%;
+  --warning: 38 100% 56.1%;
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: Menlo, monospace;
-  --radius: .5rem; 
+  --radius: .5rem;
+
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 220 9% 11%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-primary: 137 51% 74%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 220 13% 95%;
+  --sidebar-accent-foreground: 220 9% 11%;
+  --sidebar-ring: 137 51% 74%;
+
+  /* Nav SVG fill */
+  --nav-bar-fill: rgba(255,255,255,0.97);
+  --nav-bar-border: rgba(0,0,0,0.07);
+  --nav-bar-glow: rgba(153,222,173,0.12);
+}
+
+/* ── Dark mode ──────────────────────────────────────────── */
+.dark {
+  --button-outline: rgba(255,255,255, .10);
+  --badge-outline: rgba(255,255,255, .05);
+  --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
+
+  --background: 0 0% 5%;           /* #0d0d0d */
+  --foreground: 0 0% 100%;         /* #ffffff */
+
+  --card: 210 11.5% 9.6%;         /* #16181c */
+  --card-foreground: 0 0% 100%;
+  --card-border: 206 7.1% 19.8%; /* #2f3336 */
+
+  --popover: 210 11.5% 9.6%;
+  --popover-foreground: 0 0% 100%;
+  --popover-border: 206 7.1% 19.8%;
+
+  --primary: 137 51% 74%;
+  --primary-foreground: 0 0% 0%;
+
+  --secondary: 206 7.1% 19.8%;
+  --secondary-foreground: 210 12% 59.6%;
+
+  --muted: 210 11.5% 9.6%;
+  --muted-foreground: 210 12% 59.6%;
+
+  --accent: 206 7.1% 19.8%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 206 7.1% 19.8%;
+  --input: 206 7.1% 19.8%;
+  --ring: 137 51% 74%;
+
+  --success: 160 100% 36.5%;
+  --warning: 38 100% 56.1%;
 
   --sidebar: 0 0% 0%;
   --sidebar-foreground: 0 0% 100%;
@@ -122,6 +176,11 @@
   --sidebar-accent: 206 7.1% 19.8%;
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-ring: 137 51% 74%;
+
+  /* Nav SVG fill */
+  --nav-bar-fill: rgba(13,13,13,0.97);
+  --nav-bar-border: rgba(255,255,255,0.07);
+  --nav-bar-glow: rgba(153,222,173,0.12);
 }
 
 @layer base {

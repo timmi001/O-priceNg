@@ -71,10 +71,8 @@ function ImageGallery({ images, category }: { images: string[]; category: string
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      {/* Gradient placeholder */}
       <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
 
-      {/* Images */}
       <AnimatePresence mode="wait">
         <motion.div
           key={active}
@@ -92,10 +90,8 @@ function ImageGallery({ images, category }: { images: string[]; category: string
         </motion.div>
       </AnimatePresence>
 
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0d0d0d] to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
 
-      {/* Dot indicators */}
       {images.length > 1 && (
         <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
           {images.map((_, i) => (
@@ -110,7 +106,6 @@ function ImageGallery({ images, category }: { images: string[]; category: string
         </div>
       )}
 
-      {/* Image counter */}
       {images.length > 1 && (
         <div className="absolute top-4 right-16 bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full text-[11px] font-bold text-white/80 z-20">
           {active + 1}/{images.length}
@@ -128,7 +123,7 @@ function ExpandableText({ text }: { text: string }) {
 
   return (
     <div>
-      <p className="text-[14px] text-white/60 leading-relaxed">{shown}</p>
+      <p className="text-[14px] text-gray-600 dark:text-white/60 leading-relaxed">{shown}</p>
       {isLong && (
         <button
           onClick={() => setExpanded(p => !p)}
@@ -145,11 +140,11 @@ function ExpandableText({ text }: { text: string }) {
 function StatPill({ icon: Icon, value, label }: { icon: React.ElementType; value: number; label: string }) {
   return (
     <div className="flex flex-col items-center gap-1 flex-1">
-      <div className="w-8 h-8 rounded-2xl bg-white/5 flex items-center justify-center">
-        <Icon className="w-3.5 h-3.5 text-white/40" />
+      <div className="w-8 h-8 rounded-2xl bg-black/5 dark:bg-white/5 flex items-center justify-center">
+        <Icon className="w-3.5 h-3.5 text-gray-400 dark:text-white/40" />
       </div>
-      <span className="text-[13px] font-black text-white">{value}</span>
-      <span className="text-[10px] text-white/25">{label}</span>
+      <span className="text-[13px] font-black text-gray-900 dark:text-white">{value}</span>
+      <span className="text-[10px] text-gray-400 dark:text-white/25">{label}</span>
     </div>
   );
 }
@@ -189,13 +184,13 @@ export default function ListingDetail() {
   /* ── Loading skeleton ── */
   if (isLoading) {
     return (
-      <div className="min-h-[100dvh] bg-[#0d0d0d]">
-        <div className="aspect-square bg-white/4 animate-pulse" />
+      <div className="min-h-[100dvh] bg-[#f8f9fa] dark:bg-[#0d0d0d]">
+        <div className="aspect-square bg-black/4 dark:bg-white/4 animate-pulse" />
         <div className="p-5 space-y-4">
-          <div className="h-6 bg-white/5 rounded-xl w-1/2 animate-pulse" />
-          <div className="h-10 bg-white/5 rounded-xl w-3/4 animate-pulse" />
-          <div className="h-4 bg-white/5 rounded-xl w-full animate-pulse" />
-          <div className="h-4 bg-white/5 rounded-xl w-2/3 animate-pulse" />
+          <div className="h-6 bg-black/5 dark:bg-white/5 rounded-xl w-1/2 animate-pulse" />
+          <div className="h-10 bg-black/5 dark:bg-white/5 rounded-xl w-3/4 animate-pulse" />
+          <div className="h-4 bg-black/5 dark:bg-white/5 rounded-xl w-full animate-pulse" />
+          <div className="h-4 bg-black/5 dark:bg-white/5 rounded-xl w-2/3 animate-pulse" />
         </div>
       </div>
     );
@@ -203,8 +198,8 @@ export default function ListingDetail() {
 
   if (!listing) {
     return (
-      <div className="min-h-[100dvh] bg-[#0d0d0d] flex items-center justify-center">
-        <div className="text-center text-white/30 space-y-2">
+      <div className="min-h-[100dvh] bg-[#f8f9fa] dark:bg-[#0d0d0d] flex items-center justify-center">
+        <div className="text-center text-gray-400 dark:text-white/30 space-y-2">
           <Store className="w-10 h-10 mx-auto opacity-30" />
           <p className="font-semibold">Listing not found</p>
           <button onClick={() => navigate("/")} className="text-primary text-sm">Go home</button>
@@ -219,12 +214,12 @@ export default function ListingDetail() {
   const timeAgo     = formatDistanceToNow(new Date(listing.createdAt), { addSuffix: true }).replace("about ", "");
 
   return (
-    <div className="min-h-[100dvh] bg-[#0d0d0d] text-foreground pb-28">
+    <div className="min-h-[100dvh] bg-[#f8f9fa] dark:bg-[#0d0d0d] text-foreground pb-28">
 
       {/* ── FLOATING CONTROLS on image ── */}
       <div className="fixed top-0 left-0 right-0 md:left-[220px] z-50 px-4 pt-5 flex items-center justify-between pointer-events-none">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => window.history.back()}
           className="w-10 h-10 bg-black/55 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg pointer-events-auto"
           data-testid="button-back"
         >
@@ -260,12 +255,12 @@ export default function ListingDetail() {
         {/* Price + badges */}
         <div className="pt-3">
           <div className="flex items-baseline gap-3 flex-wrap">
-            <span className="text-[32px] font-black text-white leading-none">
+            <span className="text-[32px] font-black text-gray-900 dark:text-white leading-none">
               ₦{listing.price.toLocaleString()}
             </span>
             {hasDiscount && (
               <>
-                <span className="text-[16px] text-white/30 line-through leading-none">
+                <span className="text-[16px] text-gray-400 dark:text-white/30 line-through leading-none">
                   ₦{listing.originalPrice!.toLocaleString()}
                 </span>
                 <span className="text-[12px] font-black text-primary bg-primary/10 px-2.5 py-1 rounded-full">
@@ -275,12 +270,11 @@ export default function ListingDetail() {
             )}
           </div>
 
-          {/* Tags row */}
           <div className="flex flex-wrap gap-2 mt-2.5">
-            <span className="text-[11px] font-semibold text-white/50 bg-white/6 px-3 py-1 rounded-full border border-white/8">
+            <span className="text-[11px] font-semibold text-gray-500 dark:text-white/50 bg-black/5 dark:bg-white/6 px-3 py-1 rounded-full border border-black/8 dark:border-white/8">
               {listing.condition}
             </span>
-            <span className="text-[11px] font-semibold text-white/50 bg-white/6 px-3 py-1 rounded-full border border-white/8">
+            <span className="text-[11px] font-semibold text-gray-500 dark:text-white/50 bg-black/5 dark:bg-white/6 px-3 py-1 rounded-full border border-black/8 dark:border-white/8">
               {listing.category}
             </span>
             {isLive && (
@@ -290,7 +284,7 @@ export default function ListingDetail() {
               </span>
             )}
             {listing.isSponsored && (
-              <span className="text-[11px] font-semibold text-white/30 bg-white/4 px-3 py-1 rounded-full border border-white/6">
+              <span className="text-[11px] font-semibold text-gray-400 dark:text-white/30 bg-black/4 dark:bg-white/4 px-3 py-1 rounded-full border border-black/6 dark:border-white/6">
                 Sponsored
               </span>
             )}
@@ -298,66 +292,61 @@ export default function ListingDetail() {
         </div>
 
         {/* Title */}
-        <h1 className="text-[22px] font-black text-white leading-snug -mt-1">
+        <h1 className="text-[22px] font-black text-gray-900 dark:text-white leading-snug -mt-1">
           {listing.title}
         </h1>
 
         {/* Stats row */}
-        <div className="flex items-center bg-[#161616] rounded-3xl px-4 py-3 gap-2">
-          <StatPill icon={Eye}        value={listing.viewCount}  label="Views"    />
-          <div className="w-px h-8 bg-white/5" />
-          <StatPill icon={Bookmark}   value={listing.watchCount} label="Saves"    />
-          <div className="w-px h-8 bg-white/5" />
+        <div className="flex items-center bg-white dark:bg-[#161616] rounded-3xl px-4 py-3 gap-2 shadow-sm dark:shadow-none">
+          <StatPill icon={Eye}           value={listing.viewCount}  label="Views"  />
+          <div className="w-px h-8 bg-black/6 dark:bg-white/5" />
+          <StatPill icon={Bookmark}      value={listing.watchCount} label="Saves"  />
+          <div className="w-px h-8 bg-black/6 dark:bg-white/5" />
           <StatPill icon={MessageSquare} value={listing.offerCount} label="Offers" />
-          <div className="w-px h-8 bg-white/5" />
-          <StatPill icon={Heart}      value={0}                  label="Likes"    />
+          <div className="w-px h-8 bg-black/6 dark:bg-white/5" />
+          <StatPill icon={Heart}         value={0}                  label="Likes"  />
         </div>
 
         {/* Seller card */}
         <button
           onClick={() => navigate(`/seller/${listing.sellerUsername}`)}
-          className="w-full bg-[#161616] rounded-3xl p-4 flex items-center gap-3 text-left active:scale-[0.98] transition-transform"
+          className="w-full bg-white dark:bg-[#161616] rounded-3xl p-4 flex items-center gap-3 text-left active:scale-[0.98] transition-transform shadow-sm dark:shadow-none"
           data-testid={`link-seller-${listing.id}`}
         >
-          {/* Avatar */}
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/50 to-primary/10 shrink-0 overflow-hidden">
             {listing.sellerAvatar && (
               <img src={listing.sellerAvatar} alt={listing.sellerName} className="w-full h-full object-cover" />
             )}
           </div>
-
-          {/* Info */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 mb-0.5">
-              <span className="text-[15px] font-black text-white truncate">{listing.sellerName}</span>
+              <span className="text-[15px] font-black text-gray-900 dark:text-white truncate">{listing.sellerName}</span>
               {listing.isVerifiedSeller && <BadgeCheck className="w-4 h-4 text-primary shrink-0" />}
             </div>
-            <p className="text-[12px] text-white/30">@{listing.sellerUsername} · listed {timeAgo}</p>
+            <p className="text-[12px] text-gray-400 dark:text-white/30">@{listing.sellerUsername} · listed {timeAgo}</p>
           </div>
-
-          {/* Arrow */}
-          <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center shrink-0">
-            <Store className="w-3.5 h-3.5 text-white/30" />
+          <div className="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center shrink-0">
+            <Store className="w-3.5 h-3.5 text-gray-400 dark:text-white/30" />
           </div>
         </button>
 
         {/* Location */}
-        <div className="flex items-center gap-3 bg-[#161616] rounded-2xl px-4 py-3">
+        <div className="flex items-center gap-3 bg-white dark:bg-[#161616] rounded-2xl px-4 py-3 shadow-sm dark:shadow-none">
           <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
             <MapPin className="w-4 h-4 text-primary" />
           </div>
           <div>
-            <p className="text-[14px] font-semibold text-white">{listing.location}</p>
+            <p className="text-[14px] font-semibold text-gray-900 dark:text-white">{listing.location}</p>
             {listing.shippingInfo && (
-              <p className="text-[11px] text-white/30 mt-0.5">{listing.shippingInfo}</p>
+              <p className="text-[11px] text-gray-400 dark:text-white/30 mt-0.5">{listing.shippingInfo}</p>
             )}
           </div>
         </div>
 
         {/* Description */}
         {listing.description && (
-          <div className="bg-[#161616] rounded-3xl p-4">
-            <p className="text-[11px] font-bold text-white/30 uppercase tracking-wider mb-2.5">About this item</p>
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-4 shadow-sm dark:shadow-none">
+            <p className="text-[11px] font-bold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-2.5">About this item</p>
             <ExpandableText text={listing.description} />
           </div>
         )}
@@ -365,10 +354,10 @@ export default function ListingDetail() {
         {/* Suggested products */}
         {suggested.length > 0 && (
           <div>
-            <p className="text-[13px] font-black text-white/40 uppercase tracking-wider mb-3">
+            <p className="text-[13px] font-black text-gray-400 dark:text-white/40 uppercase tracking-wider mb-3">
               You might also like
             </p>
-            <div style={{ columns: "2", columnGap: "8px" }}>
+            <div className="columns-2 md:columns-3 lg:columns-4" style={{ columnGap: "8px" }}>
               {suggested.map((item, i) => (
                 <PinterestCard key={item.id} listing={item} index={i} />
               ))}
@@ -378,19 +367,16 @@ export default function ListingDetail() {
       </div>
 
       {/* ── FIXED BOTTOM CTA ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
-        <div className="bg-[#0d0d0d]/98 backdrop-blur-xl border-t border-white/5 px-4 pt-3 pb-7">
+      <div className="fixed bottom-0 left-0 right-0 md:left-[220px] z-50">
+        <div className="bg-white/98 dark:bg-[#0d0d0d]/98 backdrop-blur-xl border-t border-black/6 dark:border-white/5 px-4 pt-3 pb-7">
           <div className="flex gap-3">
-            {/* Make offer ghost button */}
             <button
               onClick={() => toast.info("Offer feature coming soon!")}
-              className="flex-1 py-4 rounded-2xl bg-white/6 border border-white/10 text-[14px] font-bold text-white/60 hover:bg-white/10 transition-colors active:scale-[0.98]"
+              className="flex-1 py-4 rounded-2xl bg-black/5 dark:bg-white/6 border border-black/10 dark:border-white/10 text-[14px] font-bold text-gray-500 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 transition-colors active:scale-[0.98]"
               data-testid="button-make-offer"
             >
               Make Offer
             </button>
-
-            {/* Message seller primary */}
             <button
               onClick={handleMessage}
               className="flex-[2] py-4 rounded-2xl bg-primary text-primary-foreground text-[15px] font-black shadow-xl shadow-primary/30 hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2"

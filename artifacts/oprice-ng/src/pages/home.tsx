@@ -8,6 +8,7 @@ import { useGetListings, useGetFeaturedListings } from "@workspace/api-client-re
 import { PinterestCard } from "@/components/pinterest-card";
 import { BottomNav } from "@/components/navigation";
 import { Sidebar } from "@/components/sidebar";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
 
@@ -101,7 +102,7 @@ export default function Home() {
 
   /* ── render ────────────────────────────────────────────── */
   return (
-    <div className="min-h-[100dvh] bg-[#0d0d0d] text-foreground">
+    <div className="min-h-[100dvh] bg-[#f8f9fa] dark:bg-[#0d0d0d] text-foreground">
 
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -110,34 +111,42 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 md:left-[220px] z-40 transition-transform duration-300 ease-in-out will-change-transform"
         style={{ transform: headerVisible ? "translateY(0)" : "translateY(-100%)" }}
       >
-        <div className="bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/5 px-4 pt-4 pb-3">
+        <div className="bg-[#f8f9fa]/95 dark:bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-black/6 dark:border-white/5 px-4 pt-4 pb-3">
           {/* Top row */}
           <div className="flex items-center justify-between mb-4">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="md:hidden w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/8 transition-colors text-white/60"
+              className="md:hidden w-9 h-9 flex items-center justify-center rounded-full hover:bg-black/6 dark:hover:bg-white/8 transition-colors text-gray-500 dark:text-white/60"
               data-testid="button-menu"
             >
               <Menu className="w-5 h-5" />
             </button>
             <div className="hidden md:block w-9 h-9" />
-            <h1 className="text-[22px] font-black tracking-tight"><span className="text-white">O'Price</span> <span className="text-primary">Ng</span></h1>
-            <Link href="/profile" data-testid="link-profile-avatar">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/60 to-primary/10 border-2 border-primary/30 overflow-hidden" />
-            </Link>
+            <h1 className="text-[22px] font-black tracking-tight">
+              <span className="text-gray-900 dark:text-white">O'Price</span>{" "}
+              <span className="text-primary">Ng</span>
+            </h1>
+            <div className="flex items-center gap-2">
+              <div className="md:hidden">
+                <ThemeToggle />
+              </div>
+              <Link href="/profile" data-testid="link-profile-avatar">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/60 to-primary/10 border-2 border-primary/30 overflow-hidden" />
+              </Link>
+            </div>
           </div>
 
           {/* Search bar */}
-          <div className="relative flex items-center bg-white/6 border border-white/10 rounded-2xl px-4 py-3 gap-3">
-            <Search className="w-4 h-4 text-white/40 shrink-0" />
-            <Link href="/explore" className="flex-1 text-sm text-white/30 cursor-pointer" data-testid="input-search-home">
+          <div className="relative flex items-center bg-black/5 dark:bg-white/6 border border-black/8 dark:border-white/10 rounded-2xl px-4 py-3 gap-3">
+            <Search className="w-4 h-4 text-gray-400 dark:text-white/40 shrink-0" />
+            <Link href="/explore" className="flex-1 text-sm text-gray-400 dark:text-white/30 cursor-pointer" data-testid="input-search-home">
               Search products, sellers, categories…
             </Link>
-            <div className="flex items-center gap-2 text-white/40">
+            <div className="flex items-center gap-2 text-gray-400 dark:text-white/40">
               <button className="hover:text-primary transition-colors" data-testid="button-voice-search">
                 <Mic className="w-4 h-4" />
               </button>
-              <div className="w-px h-4 bg-white/10" />
+              <div className="w-px h-4 bg-black/10 dark:bg-white/10" />
               <button className="hover:text-primary transition-colors" data-testid="button-camera-search">
                 <Camera className="w-4 h-4" />
               </button>
@@ -176,10 +185,10 @@ export default function Home() {
             className="fixed top-3 left-4 right-4 md:left-[228px] z-50"
           >
             <Link href="/explore">
-              <div className="flex items-center gap-3 bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/12 rounded-2xl px-4 py-3 shadow-2xl shadow-black/60">
+              <div className="flex items-center gap-3 bg-white/95 dark:bg-[#1a1a1a]/95 backdrop-blur-xl border border-black/10 dark:border-white/12 rounded-2xl px-4 py-3 shadow-lg shadow-black/10 dark:shadow-2xl dark:shadow-black/60">
                 <Search className="w-4 h-4 text-primary shrink-0" />
-                <span className="flex-1 text-sm text-white/40">Search O'price Ng…</span>
-                <Camera className="w-4 h-4 text-white/30" />
+                <span className="flex-1 text-sm text-gray-400 dark:text-white/40">Search O'Price Ng…</span>
+                <Camera className="w-4 h-4 text-gray-300 dark:text-white/30" />
               </div>
             </Link>
           </motion.div>
@@ -189,7 +198,6 @@ export default function Home() {
       {/* ── FEED ── */}
       <main className="pt-[168px] pb-28 px-2">
         {isLoading && feed.length === 0 ? (
-          /* Initial load skeleton */
           <div
             className="columns-2 md:columns-3 lg:columns-4"
             style={{ columnGap: "8px" }}
@@ -197,16 +205,16 @@ export default function Home() {
             {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="break-inside-avoid mb-2.5 rounded-[18px] overflow-hidden bg-[#161616] animate-pulse"
+                className="break-inside-avoid mb-2.5 rounded-[18px] overflow-hidden bg-white dark:bg-[#161616] animate-pulse"
               >
                 <div
-                  className="w-full bg-white/5"
+                  className="w-full bg-black/5 dark:bg-white/5"
                   style={{ aspectRatio: i % 2 === 0 ? "3/4" : "4/5" }}
                 />
                 <div className="p-2.5 space-y-2">
-                  <div className="h-3 bg-white/5 rounded w-2/3" />
-                  <div className="h-2 bg-white/5 rounded w-1/2" />
-                  <div className="h-2 bg-white/5 rounded w-3/4" />
+                  <div className="h-3 bg-black/5 dark:bg-white/5 rounded w-2/3" />
+                  <div className="h-2 bg-black/5 dark:bg-white/5 rounded w-1/2" />
+                  <div className="h-2 bg-black/5 dark:bg-white/5 rounded w-3/4" />
                 </div>
               </div>
             ))}
@@ -236,7 +244,7 @@ export default function Home() {
 
             {/* End of feed */}
             {!hasMore && feed.length > 0 && (
-              <p className="text-center text-[12px] text-white/20 py-6">
+              <p className="text-center text-[12px] text-gray-400 dark:text-white/20 py-6">
                 You're all caught up ✓
               </p>
             )}

@@ -96,7 +96,7 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
       className="cursor-pointer mb-2.5 break-inside-avoid"
       data-testid={`pin-card-${listing.id}`}
     >
-      <div className="rounded-[18px] overflow-hidden bg-[#161616] shadow-lg shadow-black/40">
+      <div className="rounded-[18px] overflow-hidden bg-white dark:bg-[#161616] shadow-md shadow-black/10 dark:shadow-lg dark:shadow-black/40">
 
         {/* ── IMAGE ── */}
         <div
@@ -129,7 +129,7 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
             )}
           </div>
 
-          {/* Top-right: LIVE + save shortcut */}
+          {/* Top-right: LIVE badge */}
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 items-end">
             {isLive && (
               <div className="flex items-center gap-1 bg-red-600/90 backdrop-blur-sm px-2 py-0.5 rounded-full">
@@ -168,12 +168,12 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
         {/* ── BODY ── */}
         <div className="px-2.5 pt-2 pb-1">
           {/* Title */}
-          <h3 className="text-[12px] font-bold text-white leading-snug line-clamp-2 mb-1.5">
+          <h3 className="text-[12px] font-bold text-gray-900 dark:text-white leading-snug line-clamp-2 mb-1.5">
             {listing.title}
           </h3>
 
           {/* Location */}
-          <div className="flex items-center gap-1 text-[10px] text-white/35 mb-2">
+          <div className="flex items-center gap-1 text-[10px] text-gray-400 dark:text-white/35 mb-2">
             <MapPin className="w-2.5 h-2.5 shrink-0" />
             <span className="truncate">{listing.location}</span>
           </div>
@@ -185,7 +185,7 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
                 <img src={listing.sellerAvatar} alt={listing.sellerName} className="w-full h-full object-cover" />
               )}
             </div>
-            <span className="text-[10px] text-white/50 truncate flex-1 leading-none">
+            <span className="text-[10px] text-gray-500 dark:text-white/50 truncate flex-1 leading-none">
               {listing.sellerName}
             </span>
             {listing.isVerifiedSeller && (
@@ -194,11 +194,10 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
           </div>
 
           {/* Engagement row */}
-          <div className="flex items-center justify-between border-t border-white/5 pt-1.5 pb-1">
-            {/* Comments */}
+          <div className="flex items-center justify-between border-t border-black/6 dark:border-white/5 pt-1.5 pb-1">
             <button
               onClick={e => e.stopPropagation()}
-              className="flex items-center gap-1 text-white/35 hover:text-primary transition-colors"
+              className="flex items-center gap-1 text-gray-400 dark:text-white/35 hover:text-primary transition-colors"
               data-testid={`pin-btn-comment-${listing.id}`}
             >
               <MessageCircle className="w-3.5 h-3.5" />
@@ -207,19 +206,17 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
               )}
             </button>
 
-            {/* Share */}
             <button
               onClick={handleShare}
-              className="flex items-center gap-1 text-white/35 hover:text-primary transition-colors"
+              className="flex items-center gap-1 text-gray-400 dark:text-white/35 hover:text-primary transition-colors"
               data-testid={`pin-btn-share-${listing.id}`}
             >
               <Share2 className="w-3.5 h-3.5" />
             </button>
 
-            {/* Bookmark */}
             <button
               onClick={handleSave}
-              className={`flex items-center gap-1 transition-colors ${isSaved ? "text-primary" : "text-white/35 hover:text-primary"}`}
+              className={`flex items-center gap-1 transition-colors ${isSaved ? "text-primary" : "text-gray-400 dark:text-white/35 hover:text-primary"}`}
               data-testid={`pin-btn-save-${listing.id}`}
             >
               <Bookmark
