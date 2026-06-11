@@ -282,7 +282,7 @@ export default function SellerProfile() {
             transition={{ duration: 0.2 }}
             className="fixed top-0 left-0 right-0 z-50 bg-[#0d0d0d]/95 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center gap-3"
           >
-            <button onClick={() => nav(-1 as never)} className="w-8 h-8 rounded-full bg-white/6 flex items-center justify-center">
+            <button onClick={() => window.history.back()} className="w-8 h-8 rounded-full bg-white/6 flex items-center justify-center">
               <ArrowLeft className="w-4 h-4 text-white/60" />
             </button>
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/50 to-primary/10 overflow-hidden shrink-0">
@@ -311,7 +311,7 @@ export default function SellerProfile() {
         {/* Back + identity row */}
         <div className="flex items-start gap-4 mb-5">
           <button
-            onClick={() => nav(-1 as never)}
+            onClick={() => window.history.back()}
             className="w-9 h-9 rounded-full bg-white/6 flex items-center justify-center mt-1 shrink-0"
             data-testid="button-back"
           >
