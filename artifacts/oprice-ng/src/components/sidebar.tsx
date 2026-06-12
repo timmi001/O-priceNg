@@ -5,7 +5,7 @@ import {
   Bell, Settings, HelpCircle, Tag, Car, Shirt,
   Building2, BriefcaseBusiness, ShoppingBag, ChevronRight,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
+
 
 interface SidebarProps {
   open: boolean;
@@ -136,11 +136,6 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                 </Link>
               ))}
 
-              {/* Theme toggle */}
-              <div className="flex items-center gap-3 px-3 py-2.5 mt-1">
-                <span className="text-[13px] font-semibold text-gray-500 dark:text-white/35 flex-1">Dark mode</span>
-                <ThemeToggle />
-              </div>
             </div>
           </motion.div>
         </>

@@ -4,7 +4,7 @@ import {
   ShoppingBag, Car, Shirt, Building2, BriefcaseBusiness, Tag,
   Bell, Settings, HelpCircle,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
+
 
 const NAV_LINKS = [
   { href: "/",         icon: Home,          label: "Home"      },
@@ -106,11 +106,6 @@ export function DesktopNav() {
           </Link>
         ))}
 
-        {/* Theme toggle row */}
-        <div className="flex items-center gap-3 px-3 py-2.5 mt-1">
-          <span className="text-[12px] font-semibold text-gray-400 dark:text-white/30 flex-1">Dark mode</span>
-          <ThemeToggle />
-        </div>
       </div>
     </aside>
   );

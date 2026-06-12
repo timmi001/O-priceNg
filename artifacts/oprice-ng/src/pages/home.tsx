@@ -8,7 +8,7 @@ import { useGetListings, useGetFeaturedListings } from "@workspace/api-client-re
 import { PinterestCard } from "@/components/pinterest-card";
 import { BottomNav } from "@/components/navigation";
 import { Sidebar } from "@/components/sidebar";
-import { ThemeToggle } from "@/components/theme-toggle";
+
 import { motion, AnimatePresence } from "framer-motion";
 import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
 
@@ -127,9 +127,6 @@ export default function Home() {
               <span className="text-primary">Ng</span>
             </h1>
             <div className="flex items-center gap-2">
-              <div className="md:hidden">
-                <ThemeToggle />
-              </div>
               <Link href="/profile" data-testid="link-profile-avatar">
                 <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/60 to-primary/10 border-2 border-primary/30 overflow-hidden" />
               </Link>
