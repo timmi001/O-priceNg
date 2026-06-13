@@ -1,0 +1,5 @@
+{
+  "outputDirectory": "dist/public",
+  "buildCommand": "cd ../.. && pnpm --filter @workspace/oprice-ng build",
+  "framework": null
+}
