@@ -9,7 +9,7 @@ import {
   Loader2, FileText, Sparkles, CheckCircle2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
+import type { Listing } from "@workspace/api-client-react";
 
 /* ── helpers ─────────────────────────────────────────────── */
 const CONDITIONS = ["New", "Like New", "Used", "Refurbished"] as const;
@@ -166,7 +166,7 @@ export default function Sell() {
   const [showPreview, setShowPreview] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const autoSaveRef  = useRef<ReturnType<typeof setTimeout>>();
+  const autoSaveRef  = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   /* load draft on mount */
   useEffect(() => {
@@ -214,7 +214,7 @@ export default function Sell() {
   };
 
   /* category display name helper */
-  const categoryName = categories?.find(c => c.slug === category)?.name ?? category;
+  const categoryName = categories?.find((c: { slug: string; name: string }) => c.slug === category)?.name ?? category;
 
   /* publish */
   const handlePublish = () => {
@@ -236,7 +236,7 @@ export default function Sell() {
           : ["https://placehold.co/800x600/99dead/000?text=No+Photo"],
       },
     }, {
-      onSuccess: (listing) => {
+      onSuccess: (listing: Listing) => {
         clearDraft();
         toast.success("Listing published! 🎉");
         setLocation(`/listing/${listing.id}`);
@@ -511,7 +511,7 @@ export default function Sell() {
                 data-testid="select-category"
               >
                 <option value="" disabled className="bg-[#161616]">Select a category</option>
-                {categories?.map(c => (
+                {categories?.map((c: { id: number; name: string; slug: string }) => (
                   <option key={c.id} value={c.slug} className="bg-[#161616]">{c.name}</option>
                 ))}
               </select>

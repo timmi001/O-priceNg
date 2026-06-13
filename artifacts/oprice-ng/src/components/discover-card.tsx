@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { MessageCircle, Share2, Bookmark, BadgeCheck, MapPin, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
+import type { Listing } from "@workspace/api-client-react";
 import { useWatchListing } from "@workspace/api-client-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -51,15 +51,15 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
     e.stopPropagation();
     const next = !isSaved;
     setIsSaved(next);
-    setSavedCount(prev => next ? prev + 1 : prev - 1);
+    setSavedCount((prev: number) => next ? prev + 1 : prev - 1);
     watchListing.mutate({ id: listing.id }, {
-      onSuccess: (data) => {
+      onSuccess: (data: { isWatched: boolean; watchCount: number }) => {
         setIsSaved(data.isWatched);
         setSavedCount(data.watchCount);
       },
       onError: () => {
         setIsSaved(!next);
-        setSavedCount(prev => next ? prev - 1 : prev + 1);
+        setSavedCount((prev: number) => next ? prev - 1 : prev + 1);
         toast.error("Failed to save");
       }
     });

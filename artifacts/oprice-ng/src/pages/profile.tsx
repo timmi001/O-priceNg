@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   useGetUserProfile, useGetUserListings, useGetBookmarks,
 } from "@workspace/api-client-react";
+import type { Listing } from "@workspace/api-client-react";
 import { BottomNav } from "@/components/navigation";
 import { PinterestCard } from "@/components/pinterest-card";
 import {
@@ -256,7 +257,7 @@ export default function Profile() {
                 />
               ) : (
                 <div style={{ columns: "2", columnGap: "8px" }}>
-                  {listings?.map((listing, i) => (
+                  {listings?.map((listing: Listing, i: number) => (
                     <PinterestCard key={listing.id} listing={listing} index={i} />
                   ))}
                 </div>
@@ -287,7 +288,7 @@ export default function Profile() {
                 />
               ) : (
                 <div style={{ columns: "2", columnGap: "8px" }}>
-                  {saved.map((listing, i) => (
+                  {saved.map((listing: Listing, i: number) => (
                     <PinterestCard key={listing.id} listing={listing} index={i} />
                   ))}
                 </div>

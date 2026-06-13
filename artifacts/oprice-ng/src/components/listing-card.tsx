@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { MoreHorizontal, MessageCircle, Share, Bookmark, BadgeCheck, MapPin } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
+import type { Listing } from "@workspace/api-client-react";
 import { useWatchListing, getGetListingsQueryKey } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -25,10 +25,10 @@ export function ListingCard({ listing }: ListingCardProps) {
     
     // Optimistic update
     setIsWatched(!isWatched);
-    setWatchCount(prev => isWatched ? prev - 1 : prev + 1);
+    setWatchCount((prev: number) => isWatched ? prev - 1 : prev + 1);
     
     watchListing.mutate({ id: listing.id }, {
-      onSuccess: (data) => {
+      onSuccess: (data: { isWatched: boolean; watchCount: number }) => {
         setIsWatched(data.isWatched);
         setWatchCount(data.watchCount);
       },
@@ -117,7 +117,7 @@ export function ListingCard({ listing }: ListingCardProps) {
             {/* Images */}
             {listing.images && listing.images.length > 0 && (
               <div className={`mt-3 rounded-2xl overflow-hidden border border-border bg-black ${listing.images.length > 1 ? 'grid grid-cols-2 gap-0.5' : ''}`}>
-                {listing.images.slice(0, 4).map((img, i) => (
+                {listing.images.slice(0, 4).map((img: string, i: number) => (
                   <div key={i} className={`relative ${listing.images!.length === 1 ? 'aspect-[4/3]' : 'aspect-square'} ${listing.images!.length === 3 && i === 0 ? 'row-span-2 aspect-[auto]' : ''}`}>
                     <img src={img} alt="" className="w-full h-full object-cover" />
                   </div>

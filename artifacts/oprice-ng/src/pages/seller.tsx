@@ -13,7 +13,7 @@ import { PinterestCard } from "@/components/pinterest-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "sonner";
-import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
+import type { Listing } from "@workspace/api-client-react";
 
 /* ── tab definition ─────────────────────────────────────── */
 type Tab = "all" | "featured" | "new" | "reviews" | "about";
@@ -118,7 +118,7 @@ function DiscoverFeedCard({ listing }: { listing: Listing }) {
           </span>
         )}
         <button
-          onClick={e => { e.stopPropagation(); setSaved(p => !p); toast.success(saved ? "Removed from saved" : "Saved!"); }}
+          onClick={e => { e.stopPropagation(); setSaved((p: boolean) => !p); toast.success(saved ? "Removed from saved" : "Saved!"); }}
           className="absolute top-3 right-3 w-9 h-9 bg-black/55 backdrop-blur-md rounded-full flex items-center justify-center"
           data-testid={`btn-save-${listing.id}`}
         >
@@ -430,7 +430,7 @@ export default function SellerProfile() {
               ) : !listings?.length ? (
                 <EmptyState icon={Package} title="No listings yet" />
               ) : (
-                listings.map(l => <DiscoverFeedCard key={l.id} listing={l} />)
+                listings.map((l: Listing) => <DiscoverFeedCard key={l.id} listing={l} />)
               )}
             </div>
           )}
@@ -450,7 +450,7 @@ export default function SellerProfile() {
                     </span>
                   </div>
                   <div className="flex gap-3 px-4 overflow-x-auto no-scrollbar pb-1">
-                    {(featured ?? []).slice(0, 6).map((l, i) => (
+                    {(featured ?? []).slice(0, 6).map((l: Listing, i: number) => (
                       <FeaturedCard key={l.id} listing={l} badge={i === 0 ? "Best Seller" : i === 1 ? "Hot Deal" : undefined} />
                     ))}
                   </div>
@@ -465,7 +465,7 @@ export default function SellerProfile() {
                 </p>
                 {loadingListings ? <ListingsSkeleton /> : (
                   <div style={{ columns: "2", columnGap: "8px" }}>
-                    {(listings ?? []).slice(0, 8).map((l, i) => (
+                    {(listings ?? []).slice(0, 8).map((l: Listing, i: number) => (
                       <PinterestCard key={l.id} listing={l} index={i} />
                     ))}
                   </div>

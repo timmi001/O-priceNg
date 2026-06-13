@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useGetTrendingSearches, useGetCategories, useGetListings } from "@workspace/api-client-react";
+import type { Listing } from "@workspace/api-client-react";
 import { BottomNav } from "@/components/navigation";
 import { ListingCard } from "@/components/listing-card";
 import { Search, Loader2, ArrowRight } from "lucide-react";
@@ -38,7 +39,7 @@ export default function Explore() {
           <section>
             <h2 className="text-xl font-bold mb-3">Trending Searches</h2>
             <div className="flex flex-wrap gap-2">
-              {trendingSearches?.map(item => (
+              {trendingSearches?.map((item: { term: string; count: number }) => (
                 <button 
                   key={item.term}
                   onClick={() => setSearchQuery(item.term)}
@@ -59,7 +60,7 @@ export default function Explore() {
               </Link>
             </div>
             <div className="flex overflow-x-auto pb-4 -mx-4 px-4 gap-3 no-scrollbar">
-              {categories?.map(category => (
+              {categories?.map((category: { id: number; name: string; slug: string }) => (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.slug)}
@@ -75,7 +76,7 @@ export default function Explore() {
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold">
-              {activeCategory ? `Category: ${categories?.find(c => c.slug === activeCategory)?.name || activeCategory}` : `Search: ${searchQuery}`}
+              {activeCategory ? `Category: ${categories?.find((c: { slug: string; name: string }) => c.slug === activeCategory)?.name || activeCategory}` : `Search: ${searchQuery}`}
             </h2>
             <button 
               onClick={() => { setSearchQuery(""); setActiveCategory(null); }}
@@ -95,7 +96,7 @@ export default function Explore() {
             </div>
           ) : (
             <div className="flex flex-col">
-              {listingsPage?.listings.map(listing => (
+              {listingsPage?.listings.map((listing: Listing) => (
                 <ListingCard key={listing.id} listing={listing} />
               ))}
             </div>

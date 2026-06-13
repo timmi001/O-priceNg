@@ -10,7 +10,7 @@ import { BottomNav } from "@/components/navigation";
 import { Sidebar } from "@/components/sidebar";
 
 import { motion, AnimatePresence } from "framer-motion";
-import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
+import type { Listing } from "@workspace/api-client-react";
 
 const CATEGORIES = [
   { label: "Electronics", icon: ShoppingBag, color: "#1d3461" },
@@ -43,7 +43,7 @@ export default function Home() {
     const incoming = listingsPage.listings ?? [];
     setAllItems(prev => {
       const existingIds = new Set(prev.map(l => l.id));
-      const fresh = incoming.filter(l => !existingIds.has(l.id));
+      const fresh = incoming.filter((l: Listing) => !existingIds.has(l.id));
       return [...prev, ...fresh];
     });
     if (incoming.length < PAGE_SIZE) setHasMore(false);
@@ -51,9 +51,9 @@ export default function Home() {
   }, [listingsPage]);
 
   /* Merge featured (pinned at top) */
-  const featuredIds = new Set((featuredListings ?? []).map(l => l.id));
+  const featuredIds = new Set((featuredListings ?? []).map((l: Listing) => l.id));
   const feed: (Listing & { isSponsored?: boolean })[] = [
-    ...(featuredListings ?? []).map(l => ({ ...l, isSponsored: true as const })),
+    ...(featuredListings ?? []).map((l: Listing) => ({ ...l, isSponsored: true as const })),
     ...allItems.filter(l => !featuredIds.has(l.id)),
   ];
 

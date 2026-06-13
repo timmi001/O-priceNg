@@ -1,0 +1,18 @@
+artifacts/oprice-ng typecheck: src/components/listing-card.tsx(120,55): error TS7006: Parameter 'i' implicitly has an 'any' type.
+artifacts/oprice-ng typecheck: src/components/pinterest-card.tsx(4,30): error TS2307: Cannot find module '@workspace/api-client-react/src/generated/api.schemas' or its corresponding type declarations.
+artifacts/oprice-ng typecheck: src/components/pinterest-card.tsx(65,19): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+artifacts/oprice-ng typecheck: src/components/pinterest-card.tsx(73,23): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+artifacts/oprice-ng typecheck: src/components/pinterest-card.tsx(158,48): error TS7006: Parameter '_' implicitly has an 'any' type.
+artifacts/oprice-ng typecheck: src/components/pinterest-card.tsx(158,51): error TS7006: Parameter 'i' implicitly has an 'any' type.
+artifacts/oprice-ng typecheck: src/pages/home.tsx(12,30): error TS2307: Cannot find module '@workspace/api-client-react/src/generated/api.schemas' or its corresponding type declarations.
+artifacts/oprice-ng typecheck: src/pages/sell.tsx(12,30): error TS2307: Cannot find module '@workspace/api-client-react/src/generated/api.schemas' or its corresponding type declarations.
+artifacts/oprice-ng typecheck: src/pages/sell.tsx(169,24): error TS2554: Expected 1 arguments, but got 0.
+artifacts/oprice-ng typecheck: src/pages/seller.tsx(16,30): error TS2307: Cannot find module '@workspace/api-client-react/src/generated/api.schemas' or its corresponding type declarations.
+artifacts/oprice-ng typecheck: src/pages/seller.tsx(121,57): error TS7006: Parameter 'p' implicitly has an 'any' type.
+artifacts/oprice-ng typecheck: Failed
+/vercel/path0/artifacts/oprice-ng:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/oprice-ng@0.0.0 typecheck: `tsc -p tsconfig.json --noEmit`
+Exit status 2
+ ELIFECYCLE  Command failed with exit code 2.
+ ELIFECYCLE  Command failed with exit code 2.
+Error: Command "pnpm run build" exited with 2

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { MessageCircle, Share2, Bookmark, BadgeCheck, MapPin } from "lucide-react";
-import type { Listing } from "@workspace/api-client-react/src/generated/api.schemas";
+import type { Listing } from "@workspace/api-client-react";
 import { useWatchListing } from "@workspace/api-client-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -62,7 +62,7 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
     e.stopPropagation();
     const next = !isSaved;
     setIsSaved(next);
-    setSavedCount(prev => next ? prev + 1 : prev - 1);
+    setSavedCount((prev: number) => next ? prev + 1 : prev - 1);
     watchListing.mutate({ id: listing.id }, {
       onSuccess: (data) => {
         setIsSaved(data.isWatched);
@@ -70,7 +70,7 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
       },
       onError: () => {
         setIsSaved(!next);
-        setSavedCount(prev => next ? prev - 1 : prev + 1);
+        setSavedCount((prev: number) => next ? prev - 1 : prev + 1);
         toast.error("Failed to save");
       },
     });
@@ -155,7 +155,7 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
           {/* Multiple images indicator */}
           {listing.images && listing.images.length > 1 && (
             <div className="absolute bottom-2.5 right-2.5 z-20 flex gap-0.5">
-              {listing.images.slice(0, 3).map((_, i) => (
+              {listing.images.slice(0, 3).map((_: string, i: number) => (
                 <span
                   key={i}
                   className={`w-1.5 h-1.5 rounded-full ${i === 0 ? "bg-white" : "bg-white/40"}`}

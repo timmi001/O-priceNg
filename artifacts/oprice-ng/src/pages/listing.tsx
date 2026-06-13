@@ -7,6 +7,7 @@ import {
 import {
   useGetListing, useGetListings, useWatchListing,
 } from "@workspace/api-client-react";
+import type { Listing } from "@workspace/api-client-react";
 import { PinterestCard } from "@/components/pinterest-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
@@ -162,10 +163,10 @@ export default function ListingDetail() {
 
   const handleSave = useCallback(() => {
     if (!listing) return;
-    setIsSaved(p => !p);
+    setIsSaved((p: boolean) => !p);
     watchListing.mutate({ id: listing.id }, {
-      onSuccess: (d) => setIsSaved(d.isWatched),
-      onError: () => { setIsSaved(p => !p); toast.error("Failed to save"); },
+      onSuccess: (d: { isWatched: boolean }) => setIsSaved(d.isWatched),
+      onError: () => { setIsSaved((p: boolean) => !p); toast.error("Failed to save"); },
     });
   }, [listing, watchListing]);
 
@@ -179,7 +180,7 @@ export default function ListingDetail() {
     toast.success("Opening messages…");
   };
 
-  const suggested = (suggestedPage?.listings ?? []).filter(l => l.id !== listing?.id).slice(0, 8);
+  const suggested = (suggestedPage?.listings ?? []).filter((l: Listing) => l.id !== listing?.id).slice(0, 8);
 
   /* ── Loading skeleton ── */
   if (isLoading) {
@@ -358,7 +359,7 @@ export default function ListingDetail() {
               You might also like
             </p>
             <div className="columns-2 md:columns-3 lg:columns-4" style={{ columnGap: "8px" }}>
-              {suggested.map((item, i) => (
+              {suggested.map((item: Listing, i: number) => (
                 <PinterestCard key={item.id} listing={item} index={i} />
               ))}
             </div>
