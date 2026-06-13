@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "artifacts/oprice-ng/dist",
+  "buildCommand": "pnpm --filter @workspace/oprice-ng build",
+  "installCommand": "pnpm install",
+  "framework": null
+}
