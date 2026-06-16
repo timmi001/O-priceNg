@@ -64,7 +64,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
             <div className="flex items-center justify-between px-5 pt-6 pb-5 border-b border-black/6 dark:border-white/5">
               <div className="flex items-center gap-2.5">
                 <img src="/logo.jpg" alt="O'Price Ng" className="w-8 h-8 rounded-xl object-cover shrink-0" />
-                <span className="text-[18px] font-black tracking-tight text-gray-900 dark:text-white">O'Price Ng</span>
+                <span className="text-[19px] font-black tracking-tight">
+                  <span className="text-gray-900 dark:text-white">O'Price</span>
+                  <span className="text-primary"> Ng</span>
+                </span>
               </div>
               <button
                 onClick={onClose}
