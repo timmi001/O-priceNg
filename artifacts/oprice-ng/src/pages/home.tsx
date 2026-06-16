@@ -34,8 +34,8 @@ export default function Home() {
   const loadingMore             = useRef(false);
   const sentinelRef             = useRef<HTMLDivElement>(null);
 
-  const { data: featuredListings }           = useGetFeaturedListings();
-  const { data: listingsPage, isLoading }    = useGetListings({ limit: PAGE_SIZE, page });
+  const { data: featuredListings }                        = useGetFeaturedListings();
+  const { data: listingsPage, isLoading, isError }       = useGetListings({ limit: PAGE_SIZE, page });
 
   /* Accumulate pages */
   useEffect(() => {
@@ -202,19 +202,48 @@ export default function Home() {
             {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="break-inside-avoid mb-2.5 rounded-[18px] overflow-hidden bg-white dark:bg-[#161616] animate-pulse"
+                className="break-inside-avoid mb-2.5 rounded-[18px] overflow-hidden bg-neutral-100 dark:bg-neutral-800 animate-pulse"
               >
                 <div
-                  className="w-full bg-black/5 dark:bg-white/5"
+                  className="w-full bg-neutral-200 dark:bg-neutral-700"
                   style={{ aspectRatio: i % 2 === 0 ? "3/4" : "4/5" }}
                 />
                 <div className="p-2.5 space-y-2">
-                  <div className="h-3 bg-black/5 dark:bg-white/5 rounded w-2/3" />
-                  <div className="h-2 bg-black/5 dark:bg-white/5 rounded w-1/2" />
-                  <div className="h-2 bg-black/5 dark:bg-white/5 rounded w-3/4" />
+                  <div className="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-2/3" />
+                  <div className="h-2 bg-neutral-200 dark:bg-neutral-600 rounded w-1/2" />
+                  <div className="h-2 bg-neutral-200 dark:bg-neutral-600 rounded w-3/4" />
                 </div>
               </div>
             ))}
+          </div>
+        ) : isError ? (
+          <div className="flex flex-col items-center justify-center py-24 px-6 text-center">
+            <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mb-4">
+              <span className="text-2xl">⚠️</span>
+            </div>
+            <h3 className="text-base font-semibold text-gray-800 dark:text-white/80 mb-2">
+              Could not load listings
+            </h3>
+            <p className="text-sm text-gray-500 dark:text-white/40 max-w-xs">
+              The database tables haven't been set up yet. Run the schema in your Supabase SQL Editor to get started.
+            </p>
+          </div>
+        ) : feed.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-24 px-6 text-center">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+              <ShoppingBag className="w-7 h-7 text-primary/60" />
+            </div>
+            <h3 className="text-base font-semibold text-gray-800 dark:text-white/80 mb-2">
+              No listings yet
+            </h3>
+            <p className="text-sm text-gray-500 dark:text-white/40 max-w-xs mb-5">
+              Be the first to post something for sale on O'Price Ng.
+            </p>
+            <Link href="/sell">
+              <div className="px-5 py-2.5 rounded-full bg-primary text-white text-sm font-semibold">
+                + Post a listing
+              </div>
+            </Link>
           </div>
         ) : (
           <>
