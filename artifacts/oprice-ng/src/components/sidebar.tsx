@@ -62,7 +62,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 pt-6 pb-5 border-b border-black/6 dark:border-white/5">
-              <div />
+              <img src="/oprice-logo.jpg" alt="O'Price" className="h-9 w-auto object-contain" />
               <button
                 onClick={onClose}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/6 hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-white/50"

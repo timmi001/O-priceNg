@@ -38,7 +38,9 @@ export function DesktopNav() {
 
       {/* Logo */}
       <div className="px-5 pt-6 pb-4 border-b border-black/6 dark:border-white/5">
-        <Link href="/" />
+        <Link href="/">
+          <img src="/oprice-logo.jpg" alt="O'Price" className="h-10 w-auto object-contain" />
+        </Link>
       </div>
 
       {/* Sell CTA */}
