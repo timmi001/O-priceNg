@@ -39,15 +39,12 @@ export function DesktopNav() {
       {/* Logo */}
       <div className="px-5 pt-6 pb-4 border-b border-black/6 dark:border-white/5">
         <Link href="/">
-          <div className="flex items-center gap-2.5">
-            <img src="/logo.jpg" alt="O'Price Ng" className="w-9 h-9 rounded-xl object-cover shrink-0" />
-            <div>
-              <span className="text-[19px] font-black tracking-tight">
-                <span className="text-gray-900 dark:text-white drop-shadow-sm">O'Price</span>
-                <span className="text-primary"> Ng</span>
-              </span>
-              <p className="text-[11px] text-gray-400 dark:text-white/25 font-medium">Nigerian Marketplace</p>
-            </div>
+          <div>
+            <span className="text-[19px] font-black tracking-tight">
+              <span className="text-gray-900 dark:text-white drop-shadow-sm">O'Price</span>
+              <span className="text-primary"> Ng</span>
+            </span>
+            <p className="text-[11px] text-gray-400 dark:text-white/25 font-medium">Nigerian Marketplace</p>
           </div>
         </Link>
       </div>
