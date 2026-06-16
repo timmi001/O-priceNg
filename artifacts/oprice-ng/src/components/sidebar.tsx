@@ -2,10 +2,9 @@ import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X, Home, Search, Bookmark, User, MessageCircle,
-  Bell, Settings, HelpCircle, Tag, Car, Shirt,
-  Building2, BriefcaseBusiness, ShoppingBag, ChevronRight,
+  Bell, Settings, HelpCircle, ChevronRight,
 } from "lucide-react";
-
+import { CATEGORY_CONFIG } from "@/lib/categories";
 
 interface SidebarProps {
   open: boolean;
@@ -13,20 +12,11 @@ interface SidebarProps {
 }
 
 const NAV_LINKS = [
-  { href: "/",        icon: Home,          label: "Home" },
-  { href: "/explore", icon: Search,        label: "Explore" },
-  { href: "/saved",   icon: Bookmark,      label: "Saved" },
-  { href: "/messages",icon: MessageCircle, label: "Messages" },
-  { href: "/profile", icon: User,          label: "My Profile" },
-];
-
-const CATEGORIES = [
-  { href: "/explore?category=Electronics", icon: ShoppingBag,      label: "Electronics",   color: "#1d3461" },
-  { href: "/explore?category=Vehicles",    icon: Car,              label: "Vehicles",      color: "#2d1b00" },
-  { href: "/explore?category=Fashion",     icon: Shirt,            label: "Fashion",       color: "#2d0a1a" },
-  { href: "/explore?category=Property",    icon: Building2,        label: "Property",      color: "#0a2d1a" },
-  { href: "/explore?category=Jobs",        icon: BriefcaseBusiness,label: "Jobs",          color: "#1a0a2d" },
-  { href: "/explore?category=Deals",       icon: Tag,              label: "Deals",         color: "#2d1a00" },
+  { href: "/",         icon: Home,          label: "Home" },
+  { href: "/explore",  icon: Search,        label: "Explore" },
+  { href: "/saved",    icon: Bookmark,      label: "Saved" },
+  { href: "/messages", icon: MessageCircle, label: "Messages" },
+  { href: "/profile",  icon: User,          label: "My Profile" },
 ];
 
 const BOTTOM_LINKS = [
@@ -106,8 +96,8 @@ export function Sidebar({ open, onClose }: SidebarProps) {
               {/* Categories */}
               <p className="px-2 pt-3 pb-1 text-[10px] font-bold text-gray-400 dark:text-white/20 uppercase tracking-widest">Categories</p>
               <div className="grid grid-cols-2 gap-1.5 pb-4">
-                {CATEGORIES.map(({ href, icon: Icon, label, color }) => (
-                  <Link key={label} href={href} onClick={onClose}>
+                {CATEGORY_CONFIG.map(({ label, slug, icon: Icon, color }) => (
+                  <Link key={slug} href={`/explore?category=${encodeURIComponent(label)}`} onClick={onClose}>
                     <div
                       className="flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all hover:opacity-80 active:scale-95"
                       style={{ backgroundColor: color + "22" }}
@@ -122,7 +112,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
               </div>
             </nav>
 
-            {/* Bottom links + theme toggle */}
+            {/* Bottom links */}
             <div className="px-3 pb-8 border-t border-black/6 dark:border-white/5 pt-3">
               {BOTTOM_LINKS.map(({ href, icon: Icon, label }) => (
                 <Link key={label} href={href} onClick={onClose}>
@@ -132,7 +122,6 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                   </div>
                 </Link>
               ))}
-
             </div>
           </motion.div>
         </>

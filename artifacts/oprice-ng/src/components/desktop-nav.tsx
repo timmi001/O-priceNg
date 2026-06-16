@@ -1,9 +1,9 @@
 import { Link, useLocation } from "wouter";
 import {
   Home, Search, Bookmark, User, MessageCircle, Plus,
-  ShoppingBag, Car, Shirt, Building2, BriefcaseBusiness, Tag,
   Bell, Settings, HelpCircle,
 } from "lucide-react";
+import { CATEGORY_CONFIG } from "@/lib/categories";
 
 
 const NAV_LINKS = [
@@ -12,15 +12,6 @@ const NAV_LINKS = [
   { href: "/saved",    icon: Bookmark,      label: "Saved"     },
   { href: "/messages", icon: MessageCircle, label: "Messages"  },
   { href: "/profile",  icon: User,          label: "Profile"   },
-];
-
-const CATEGORIES = [
-  { href: "/explore?category=Electronics", icon: ShoppingBag,       label: "Electronics", color: "#1d3461" },
-  { href: "/explore?category=Vehicles",    icon: Car,               label: "Vehicles",    color: "#2d1b00" },
-  { href: "/explore?category=Fashion",     icon: Shirt,             label: "Fashion",     color: "#2d0a1a" },
-  { href: "/explore?category=Property",    icon: Building2,         label: "Property",    color: "#0a2d1a" },
-  { href: "/explore?category=Jobs",        icon: BriefcaseBusiness, label: "Jobs",        color: "#1a0a2d" },
-  { href: "/explore?category=Deals",       icon: Tag,               label: "Deals",       color: "#2d1a00" },
 ];
 
 const BOTTOM_LINKS = [
@@ -77,8 +68,8 @@ export function DesktopNav() {
 
         {/* Categories */}
         <p className="px-3 pt-4 pb-1.5 text-[10px] font-bold text-gray-400 dark:text-white/20 uppercase tracking-widest">Categories</p>
-        {CATEGORIES.map(({ href, icon: Icon, label, color }) => (
-          <Link key={label} href={href}>
+        {CATEGORY_CONFIG.map(({ label, slug, icon: Icon, color }) => (
+          <Link key={slug} href={`/explore?category=${encodeURIComponent(label)}`}>
             <div className="flex items-center gap-3 px-3 py-2 rounded-xl mb-0.5 text-gray-500 dark:text-white/45 hover:text-gray-800 dark:hover:text-white/80 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-150">
               <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: color + "cc" }}>
                 <Icon className="w-3.5 h-3.5 text-white/80" />
