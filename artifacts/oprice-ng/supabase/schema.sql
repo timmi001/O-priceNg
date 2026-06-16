@@ -51,10 +51,14 @@ create trigger on_auth_user_created
   for each row execute procedure public.handle_new_user();
 
 -- ── 2. CATEGORIES ────────────────────────────────────────────
-create table if not exists public.categories (
-  id    serial primary key,
-  name  text   not null,
-  slug  text   unique not null
+drop table if exists public.categories cascade;
+
+create table public.categories (
+  id            serial      primary key,
+  name          text        not null,
+  slug          text        unique not null,
+  color         text,
+  subcategories text[]      default '{}'
 );
 
 alter table public.categories enable row level security;
@@ -62,19 +66,22 @@ alter table public.categories enable row level security;
 create policy "Categories are public read" on public.categories
   for select using (true);
 
-insert into public.categories (name, slug) values
-  ('Electronics',      'electronics'),
-  ('Vehicles',         'vehicles'),
-  ('Fashion',          'fashion'),
-  ('Property',         'property'),
-  ('Jobs',             'jobs'),
-  ('Deals',            'deals'),
-  ('Phones',           'phones'),
-  ('Computers',        'computers'),
-  ('Appliances',       'appliances'),
-  ('Home & Kitchen',   'home-kitchen'),
-  ('Food & Agriculture','food-agriculture')
-on conflict (slug) do nothing;
+insert into public.categories (name, slug, color, subcategories) values
+  ('Electronics',  'electronics',     '#1a3a5c', ARRAY['Televisions','Generators','Air Conditioners','Refrigerators','Sound Systems','Cameras','Fans','Irons & Steamers']),
+  ('Phones',       'phones',          '#1a3a2a', ARRAY['Smartphones','Tablets','Earphones','Chargers & Cables','Cases & Covers','Smartwatches','Feature Phones']),
+  ('Computers',    'computers',       '#2a1a4a', ARRAY['Laptops','Desktops','Monitors','Printers','Accessories','Networking','Storage']),
+  ('Fashion',      'fashion',         '#3a1a1a', ARRAY['Men''s Wear','Women''s Wear','Shoes','Bags','Jewelry','Kids'' Fashion','Ankara & Native','Underwear']),
+  ('Home',         'home-living',     '#1a3a1a', ARRAY['Furniture','Kitchenware','Bedding','Lighting','Home Decor','Garden','Cleaning Supplies','Tools']),
+  ('Food',         'food-agriculture','#2a3a10', ARRAY['Food Items','Farm Produce','Livestock','Poultry','Farm Equipment','Seeds & Fertilizers','Fish & Seafood']),
+  ('Vehicles',     'vehicles',        '#2a1a00', ARRAY['Cars','Motorcycles','Trucks','Buses','Boats','Spare Parts','Tyres & Wheels','Car Accessories']),
+  ('Property',     'property',        '#0a2a1a', ARRAY['Houses for Sale','Land','Commercial','Short Lets','Hotels & Lodging']),
+  ('Rentals',      'rentals',         '#1a2a3a', ARRAY['Apartments','Shops','Offices','Event Halls','Equipment Rental']),
+  ('Jobs',         'jobs',            '#1a0a2a', ARRAY['Full Time','Part Time','Internship','Remote','Contract','Freelance']),
+  ('Services',     'services',        '#2a2a00', ARRAY['Repairs','Beauty & Wellness','Cleaning','Catering','Logistics','Photography','Education & Tutoring','Events'])
+on conflict (slug) do update
+  set name = excluded.name,
+      color = excluded.color,
+      subcategories = excluded.subcategories;
 
 -- ── 3. LISTINGS ──────────────────────────────────────────────
 create table if not exists public.listings (
