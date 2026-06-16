@@ -69,10 +69,11 @@ interface GetListingsParams {
   page?: number;
   search?: string;
   category?: string;
+  subcategory?: string;
 }
 
 export function useGetListings(params: GetListingsParams = {}) {
-  const { limit = 20, page = 1, search, category } = params;
+  const { limit = 20, page = 1, search, category, subcategory } = params;
   return useQuery<ListingsPage>({
     queryKey: queryKeys.listings(params),
     queryFn: async () => {
@@ -85,6 +86,7 @@ export function useGetListings(params: GetListingsParams = {}) {
 
       if (search) q = q.ilike("title", `%${search}%`);
       if (category) q = q.eq("category", category);
+      if (subcategory) q = q.eq("subcategory", subcategory);
 
       const { data, error, count } = await q;
       if (error) throw error;

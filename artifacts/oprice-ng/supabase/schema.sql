@@ -86,6 +86,7 @@ create table if not exists public.listings (
   original_price  numeric,
   condition       text        default 'New',
   category        text        not null,
+  subcategory     text,
   location        text        not null,
   images          text[]      default '{}',
   shipping_info   text,
