@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "sonner";
 import type { Listing } from "@/lib/types";
+import { formatLocation } from "@/lib/types";
 
 /* ── tab definition ─────────────────────────────────────── */
 type Tab = "all" | "featured" | "new" | "reviews" | "about";
@@ -84,7 +85,7 @@ function FeaturedCard({ listing, badge }: { listing: Listing; badge?: string }) 
         <div className="px-3 py-2.5">
           <p className="text-[12px] font-bold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1">{listing.title}</p>
           <p className="text-[10px] text-gray-400 dark:text-white/30 flex items-center gap-1">
-            <MapPin className="w-2.5 h-2.5" />{listing.location}
+            <MapPin className="w-2.5 h-2.5" />{formatLocation(listing)}
           </p>
         </div>
       </div>
@@ -139,7 +140,7 @@ function DiscoverFeedCard({ listing }: { listing: Listing }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-[11px] text-gray-400 dark:text-white/30">
             <span className="flex items-center gap-1">
-              <MapPin className="w-3 h-3" />{listing.location}
+              <MapPin className="w-3 h-3" />{formatLocation(listing)}
             </span>
             <span className="flex items-center gap-1">
               <Package className="w-3 h-3" />{listing.condition}
@@ -347,7 +348,7 @@ export default function SellerProfile() {
             </div>
             <p className="text-[12px] text-gray-500 dark:text-white/35 mb-1">@{profile.username}</p>
             <div className="flex items-center gap-2 text-[11px] text-gray-400 dark:text-white/25 flex-wrap">
-              <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{profile.location}</span>
+              <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{formatLocation(profile)}</span>
               <span className="w-1 h-1 rounded-full bg-black/15 dark:bg-white/15" />
               <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />Joined {joinedAgo} ago</span>
             </div>
@@ -544,7 +545,7 @@ export default function SellerProfile() {
 
               {/* Policies */}
               {[
-                { icon: Truck,      title: "Delivery",  body: "Ships within 1–3 business days. Available for pickup in " + profile.location + "." },
+                { icon: Truck,      title: "Delivery",  body: "Ships within 1–3 business days. Available for pickup in " + formatLocation(profile) + "." },
                 { icon: RotateCcw,  title: "Returns",   body: "7-day return policy on all items. Item must be in original condition." },
                 { icon: Shield,     title: "Guarantee", body: "All listings are genuine and as described. Message before buying for more details." },
               ].map(({ icon: Icon, title, body }) => (

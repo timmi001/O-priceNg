@@ -25,7 +25,9 @@ function transformListing(row: Record<string, unknown>): Listing {
     originalPrice: row.original_price ? Number(row.original_price) : undefined,
     condition: (row.condition as string) || "New",
     category: row.category as string,
-    location: row.location as string,
+    country: (row.country as string) || "Nigeria",
+    state: row.state as string | undefined,
+    city: row.city as string | undefined,
     images: (row.images as string[]) || [],
     shippingInfo: row.shipping_info as string | undefined,
     isSponsored: (row.is_featured as boolean) || false,
@@ -52,7 +54,9 @@ function transformProfile(row: Record<string, unknown>, totalListings = 0): User
     avatar: row.avatar_url as string | undefined,
     coverImage: row.cover_image as string | undefined,
     bio: row.bio as string | undefined,
-    location: (row.location as string) || "Nigeria",
+    country: (row.country as string) || "Nigeria",
+    state: row.state as string | undefined,
+    city: row.city as string | undefined,
     isVerified: (row.is_verified as boolean) || false,
     rating: Number(row.rating) || 0,
     totalSales: (row.total_sales as number) || 0,
@@ -303,7 +307,9 @@ interface CreateListingInput {
   price: number;
   condition: string;
   category: string;
-  location: string;
+  country: string;
+  state?: string;
+  city?: string;
   images?: string[];
   shippingInfo?: string;
 }
@@ -325,7 +331,9 @@ export function useCreateListing() {
           price: input.price,
           condition: input.condition,
           category: input.category,
-          location: input.location,
+          country: input.country,
+          state: input.state,
+          city: input.city,
           images: input.images ?? [],
           shipping_info: input.shippingInfo,
         })

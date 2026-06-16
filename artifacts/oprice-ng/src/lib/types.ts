@@ -6,7 +6,9 @@ export interface Listing {
   originalPrice?: number;
   condition: string;
   category: string;
-  location: string;
+  country: string;
+  state?: string;
+  city?: string;
   images?: string[];
   shippingInfo?: string;
   isSponsored?: boolean;
@@ -31,7 +33,9 @@ export interface UserProfile {
   avatar?: string;
   coverImage?: string;
   bio?: string;
-  location: string;
+  country: string;
+  state?: string;
+  city?: string;
   isVerified: boolean;
   rating: number;
   totalSales: number;
@@ -55,4 +59,9 @@ export interface ListingsPage {
   total: number;
   page: number;
   limit: number;
+}
+
+export function formatLocation(item: { country?: string; state?: string; city?: string }): string {
+  const parts = [item.city, item.state, item.country].filter(Boolean);
+  return parts.join(", ") || "Location unknown";
 }

@@ -4,6 +4,7 @@ import {
 } from "@/lib/supabase-hooks";
 import { useAuth } from "@/lib/auth-context";
 import type { Listing } from "@/lib/types";
+import { formatLocation } from "@/lib/types";
 import { BottomNav } from "@/components/navigation";
 import { PinterestCard } from "@/components/pinterest-card";
 import {
@@ -191,7 +192,7 @@ export default function Profile() {
         <div className="flex items-center gap-3 mt-2 text-[11px] text-white/25 font-semibold">
           <span className="flex items-center gap-1">
             <MapPin className="w-3 h-3" />
-            {profile.location}
+            {formatLocation(profile)}
           </span>
           <span className="w-1 h-1 rounded-full bg-white/15" />
           <span className="flex items-center gap-1">
@@ -377,7 +378,7 @@ export default function Profile() {
                 {[
                   { label: "Display Name", value: profile.name },
                   { label: "Bio",          value: profile.bio ?? "" },
-                  { label: "Location",     value: profile.location },
+                  { label: "Location",     value: formatLocation(profile) },
                 ].map(({ label, value }) => (
                   <div key={label} className="bg-white/5 rounded-2xl px-4 py-3">
                     <p className="text-[10px] font-bold text-white/30 uppercase tracking-wider mb-1">{label}</p>

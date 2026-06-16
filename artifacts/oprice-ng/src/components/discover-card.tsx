@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { MessageCircle, Share2, Bookmark, BadgeCheck, MapPin, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { Listing } from "@/lib/types";
+import { formatLocation } from "@/lib/types";
 import { useWatchListing } from "@/lib/supabase-hooks";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -169,7 +170,7 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
 
           <div className="flex items-center gap-1 text-[12px] text-white/40 mb-3">
             <MapPin className="w-3 h-3" />
-            {listing.location}
+            {formatLocation(listing)}
             {listing.shippingInfo && (
               <span className="ml-1 text-primary/70">· {listing.shippingInfo}</span>
             )}

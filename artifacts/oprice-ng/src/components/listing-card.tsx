@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { MoreHorizontal, MessageCircle, Share, Bookmark, BadgeCheck, MapPin } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { Listing } from "@/lib/types";
+import { formatLocation } from "@/lib/types";
 import { useWatchListing } from "@/lib/supabase-hooks";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -116,7 +117,7 @@ export function ListingCard({ listing }: ListingCardProps) {
             <div className="flex gap-4 mt-3 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <MapPin className="w-4 h-4" />
-                {listing.location}
+                {formatLocation(listing)}
               </div>
             </div>
 

@@ -5,16 +5,17 @@ import { useLocation } from "wouter";
 import { toast } from "sonner";
 import {
   ArrowLeft, Camera, Plus, X, ChevronDown,
-  MapPin, Navigation, MessageCircle, Eye,
-  Loader2, FileText, Sparkles, CheckCircle2,
+  MapPin, MessageCircle, Eye,
+  FileText, Sparkles, CheckCircle2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Listing } from "@/lib/types";
+import { formatLocation } from "@/lib/types";
+import { AFRICA_COUNTRIES, COUNTRY_CITIES } from "@/lib/africa-locations";
 
 /* ── helpers ─────────────────────────────────────────────── */
 const CONDITIONS = ["New", "Like New", "Used", "Refurbished"] as const;
 const MAX_DESC   = 1000;
-const NG_CITIES  = ["Lagos", "Abuja", "Port Harcourt", "Kano", "Ibadan", "Enugu", "Benin City", "Kaduna", "Owerri", "Warri"];
 
 const CATEGORY_GRADIENTS: Record<string, string> = {
   Phones: "from-violet-900/80 to-purple-950/90",
@@ -87,7 +88,7 @@ function FloatingInput({
 
 /* ── Mini preview card (same aesthetic as PinterestCard) ── */
 function PreviewCard({ form, imageUrls, categoryName }: {
-  form: { title: string; price: string; location: string; condition: string; category: string };
+  form: { title: string; price: string; locationLabel: string; condition: string; category: string };
   imageUrls: string[];
   categoryName: string;
 }) {
@@ -98,7 +99,7 @@ function PreviewCard({ form, imageUrls, categoryName }: {
     id: 0,
     title: form.title || "Your listing title",
     price: Number(form.price) || 0,
-    location: form.location || "Your location",
+    country: form.locationLabel || "Your location",
     condition: form.condition,
     category: categoryName || form.category,
     sellerName: "You",
@@ -134,7 +135,7 @@ function PreviewCard({ form, imageUrls, categoryName }: {
         </h3>
         <div className="flex items-center gap-1 text-[9px] text-white/35 mb-1.5">
           <MapPin className="w-2 h-2" />
-          <span className="truncate">{mockListing.location}</span>
+          <span className="truncate">{formatLocation(mockListing as { country?: string; state?: string; city?: string })}</span>
         </div>
         <div className="flex items-center justify-between border-t border-white/5 pt-1.5">
           <MessageCircle className="w-3 h-3 text-white/25" />
@@ -161,7 +162,9 @@ export default function Sell() {
   const [category, setCategory]     = useState("");
   const [condition, setCondition]   = useState<string>("New");
   const [description, setDescription] = useState("");
-  const [location_, setLocation_]   = useState("");
+  const [country_, setCountry_]     = useState("Nigeria");
+  const [state_, setState_]         = useState("");
+  const [city_, setCity_]           = useState("");
   const [whatsapp, setWhatsapp]     = useState(true);
   const [showPreview, setShowPreview] = useState(false);
 
@@ -179,7 +182,9 @@ export default function Sell() {
     if (d.category)    setCategory(d.category);
     if (d.condition)   setCondition(d.condition);
     if (d.description) setDescription(d.description);
-    if (d.location)    setLocation_(d.location);
+    if (d.country)  setCountry_(d.country);
+    if (d.state)    setState_(d.state);
+    if (d.city)     setCity_(d.city);
     if (d.whatsapp !== undefined) setWhatsapp(d.whatsapp);
   }, []);
 
@@ -187,13 +192,13 @@ export default function Sell() {
   useEffect(() => {
     clearTimeout(autoSaveRef.current);
     autoSaveRef.current = setTimeout(() => {
-      saveDraft({ title, price, originalPrice, negotiable, category, condition, description, location: location_, whatsapp });
+      saveDraft({ title, price, originalPrice, negotiable, category, condition, description, country: country_, state: state_, city: city_, whatsapp });
     }, 1000);
     return () => clearTimeout(autoSaveRef.current);
-  }, [title, price, originalPrice, negotiable, category, condition, description, location_, whatsapp]);
+  }, [title, price, originalPrice, negotiable, category, condition, description, country_, state_, city_, whatsapp]);
 
   /* progress */
-  const steps = [images.length > 0, title.trim() !== "", price !== "", category !== "", location_.trim() !== ""];
+  const steps = [images.length > 0, title.trim() !== "", price !== "", category !== "", country_ !== ""];
   const progress = Math.round((steps.filter(Boolean).length / steps.length) * 100);
   const canPublish = steps.every(Boolean);
 
@@ -229,7 +234,9 @@ export default function Sell() {
         price: Number(price),
         condition,
         category,
-        location: location_,
+        country: country_,
+        state: state_ || undefined,
+        city: city_ || undefined,
         shippingInfo: undefined,
         images: images.length > 0
           ? images.map((_, i) => `https://placehold.co/800x600/99dead/000?text=Photo+${i + 1}`)
@@ -246,7 +253,7 @@ export default function Sell() {
   };
 
   const handleSaveDraft = () => {
-    saveDraft({ title, price, originalPrice, negotiable, category, condition, description, location: location_, whatsapp });
+    saveDraft({ title, price, originalPrice, negotiable, category, condition, description, country: country_, state: state_, city: city_, whatsapp });
     toast.success("Draft saved");
   };
 
@@ -321,7 +328,7 @@ export default function Sell() {
                   <Eye className="w-3 h-3" /> Live Preview
                 </p>
                 <div className="flex items-start gap-3">
-                  <PreviewCard form={{ title, price, location: location_, condition, category }} imageUrls={images} categoryName={categoryName} />
+                  <PreviewCard form={{ title, price, locationLabel: formatLocation({ country: country_, state: state_, city: city_ }), condition, category }} imageUrls={images} categoryName={categoryName} />
                   <div className="flex-1 pt-1 space-y-2">
                     <p className="text-[11px] text-white/30 leading-relaxed">
                       This is exactly how your listing will appear in buyers' feeds.
@@ -332,7 +339,7 @@ export default function Sell() {
                         {!title.trim()        && <MissingHint text="Add a title" />}
                         {!price               && <MissingHint text="Set a price" />}
                         {!category            && <MissingHint text="Choose a category" />}
-                        {!location_.trim()    && <MissingHint text="Add your location" />}
+                        {!country_            && <MissingHint text="Select your country" />}
                       </div>
                     )}
                     {canPublish && (
@@ -547,42 +554,73 @@ export default function Sell() {
             <SectionLabel icon={MapPin} text="Location" hint="Where are you selling from?" />
           </div>
 
-          {/* Quick city chips */}
-          <div className="flex gap-2 px-4 overflow-x-auto no-scrollbar pb-3">
-            {NG_CITIES.map(city => (
-              <button
-                key={city}
-                onClick={() => setLocation_(city)}
-                className={`shrink-0 px-3 py-1.5 rounded-full text-[12px] font-semibold transition-all ${
-                  location_ === city
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-white/5 text-white/40 border border-white/8"
-                }`}
-                data-testid={`city-${city.toLowerCase().replace(" ", "-")}`}
-              >
-                {city}
-              </button>
-            ))}
-          </div>
-
-          {/* Manual input */}
-          <div className="px-4 pb-4">
-            <div className="flex items-center gap-3 bg-white/4 border border-white/8 rounded-2xl px-4 py-3 focus-within:border-primary/30 transition-colors">
-              <Navigation className="w-4 h-4 text-white/30 shrink-0" />
-              <input
-                type="text"
-                placeholder="Or type a custom location…"
-                value={location_}
-                onChange={e => setLocation_(e.target.value)}
-                className="flex-1 bg-transparent text-[14px] text-white placeholder:text-white/20 outline-none"
-                data-testid="input-location"
-              />
-              {location_ && (
-                <button onClick={() => setLocation_("")} className="text-white/30 hover:text-white/60">
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
+          <div className="px-4 pb-4 space-y-2.5">
+            {/* Country selector */}
+            <div>
+              <p className="text-[10px] font-bold text-white/30 uppercase tracking-wider mb-1.5">Country *</p>
+              <div className="relative">
+                <select
+                  value={country_}
+                  onChange={e => { setCountry_(e.target.value); setState_(""); setCity_(""); }}
+                  className="w-full bg-white/5 text-white text-[14px] font-semibold rounded-2xl px-4 py-3 pr-10 border border-white/8 appearance-none outline-none focus:border-primary/40 transition-colors"
+                  data-testid="select-country"
+                >
+                  <option value="" disabled className="bg-[#161616]">Select country</option>
+                  {AFRICA_COUNTRIES.map(c => (
+                    <option key={c} value={c} className="bg-[#161616]">{c}</option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+              </div>
             </div>
+
+            {/* City quick-pick chips (show top cities for selected country) */}
+            {country_ && (COUNTRY_CITIES[country_]?.length ?? 0) > 0 && (
+              <div>
+                <p className="text-[10px] font-bold text-white/30 uppercase tracking-wider mb-1.5">City / Area <span className="normal-case text-white/20 font-normal">(optional)</span></p>
+                <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+                  {(COUNTRY_CITIES[country_] ?? []).map(c => (
+                    <button
+                      key={c}
+                      onClick={() => setCity_(city_ === c ? "" : c)}
+                      className={`shrink-0 px-3 py-1.5 rounded-full text-[12px] font-semibold transition-all ${
+                        city_ === c
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-white/5 text-white/40 border border-white/8"
+                      }`}
+                      data-testid={`city-${c.toLowerCase().replace(/\s+/g, "-")}`}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Custom city override */}
+                <div className="flex items-center gap-2 bg-white/4 border border-white/8 rounded-xl px-3 py-2.5 mt-2 focus-within:border-primary/30 transition-colors">
+                  <input
+                    type="text"
+                    placeholder="Or type a city / area…"
+                    value={city_}
+                    onChange={e => setCity_(e.target.value)}
+                    className="flex-1 bg-transparent text-[13px] text-white placeholder:text-white/20 outline-none"
+                    data-testid="input-city"
+                  />
+                  {city_ && (
+                    <button onClick={() => setCity_("")} className="text-white/30 hover:text-white/60">
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Location preview */}
+            {country_ && (
+              <div className="flex items-center gap-2 text-[12px] text-white/40 pt-1">
+                <MapPin className="w-3.5 h-3.5 text-primary/60 shrink-0" />
+                <span>{formatLocation({ country: country_, state: state_, city: city_ })}</span>
+              </div>
+            )}
           </div>
         </SectionCard>
 

@@ -11,7 +11,9 @@ create table if not exists public.profiles (
   avatar_url    text,
   cover_image   text,
   bio           text,
-  location      text        default 'Nigeria',
+  country       text        not null default 'Nigeria',
+  state         text,
+  city          text,
   is_verified   boolean     default false,
   rating        numeric(3,2) default 0,
   total_sales   integer     default 0,
@@ -94,7 +96,9 @@ create table if not exists public.listings (
   condition       text        default 'New',
   category        text        not null,
   subcategory     text,
-  location        text        not null,
+  country         text        not null default 'Nigeria',
+  state           text,
+  city            text,
   images          text[]      default '{}',
   shipping_info   text,
   is_featured     boolean     default false,
@@ -168,12 +172,27 @@ on conflict do nothing;
 -- Then insert sample listings tied to that user.
 
 -- Example (run after signing up a real user and getting their UUID from auth.users):
--- insert into public.profiles (id, username, name, location, is_verified, rating, total_sales)
--- values ('YOUR-USER-UUID', 'demo_seller', 'Demo Seller', 'Lagos, Nigeria', true, 4.8, 47);
+-- insert into public.profiles (id, username, name, country, city, is_verified, rating, total_sales)
+-- values ('YOUR-USER-UUID', 'demo_seller', 'Demo Seller', 'Nigeria', 'Lagos', true, 4.8, 47);
 --
--- insert into public.listings (user_id, title, description, price, condition, category, location, images, is_featured)
+-- insert into public.listings (user_id, title, description, price, condition, category, country, city, images, is_featured)
 -- values
---   ('YOUR-USER-UUID', 'iPhone 14 Pro 256GB', 'Brand new sealed box...', 850000, 'New', 'Phones', 'Lagos, Nigeria',
+--   ('YOUR-USER-UUID', 'iPhone 14 Pro 256GB', 'Brand new sealed box...', 850000, 'New', 'Phones', 'Nigeria', 'Lagos',
 --    ARRAY['https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=800'], true),
---   ('YOUR-USER-UUID', 'Toyota Corolla 2020', 'Clean registered car...', 15000000, 'Used', 'Vehicles', 'Abuja, Nigeria',
+--   ('YOUR-USER-UUID', 'Toyota Corolla 2020', 'Clean registered car...', 15000000, 'Used', 'Vehicles', 'Nigeria', 'Abuja',
 --    ARRAY['https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800'], false);
+
+-- ── 7. MIGRATION — run this block if upgrading an existing database ───────────
+-- alter table public.profiles
+--   add column if not exists country text not null default 'Nigeria',
+--   add column if not exists state text,
+--   add column if not exists city text;
+--
+-- update public.profiles set country = 'Nigeria' where country is null;
+--
+-- alter table public.listings
+--   add column if not exists country text not null default 'Nigeria',
+--   add column if not exists state text,
+--   add column if not exists city text;
+--
+-- update public.listings set country = 'Nigeria' where country is null;

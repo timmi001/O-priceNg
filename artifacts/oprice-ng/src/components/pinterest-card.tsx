@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { MessageCircle, Share2, Bookmark, BadgeCheck, MapPin } from "lucide-react";
 import type { Listing } from "@/lib/types";
+import { formatLocation } from "@/lib/types";
 import { useWatchListing } from "@/lib/supabase-hooks";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -169,7 +170,7 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
 
           <div className="flex items-center gap-1 text-[10px] text-gray-400 dark:text-white/35 mb-2">
             <MapPin className="w-2.5 h-2.5 shrink-0" />
-            <span className="truncate">{listing.location}</span>
+            <span className="truncate">{formatLocation(listing)}</span>
           </div>
 
           <div className="flex items-center gap-1.5 mb-1.5">

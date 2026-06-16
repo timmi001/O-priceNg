@@ -8,6 +8,7 @@ import {
   useGetListing, useGetListings, useWatchListing,
 } from "@/lib/supabase-hooks";
 import type { Listing } from "@/lib/types";
+import { formatLocation } from "@/lib/types";
 import { PinterestCard } from "@/components/pinterest-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
@@ -337,7 +338,7 @@ export default function ListingDetail() {
             <MapPin className="w-4 h-4 text-primary" />
           </div>
           <div>
-            <p className="text-[14px] font-semibold text-gray-900 dark:text-white">{listing.location}</p>
+            <p className="text-[14px] font-semibold text-gray-900 dark:text-white">{formatLocation(listing)}</p>
             {listing.shippingInfo && (
               <p className="text-[11px] text-gray-400 dark:text-white/30 mt-0.5">{listing.shippingInfo}</p>
             )}
