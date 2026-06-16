@@ -1,5 +1,5 @@
 import { Bookmark, Loader2 } from "lucide-react";
-import { useGetBookmarks } from "@workspace/api-client-react";
+import { useGetBookmarks } from "@/lib/supabase-hooks";
 import { PinterestCard } from "@/components/pinterest-card";
 import { BottomNav } from "@/components/navigation";
 import { motion } from "framer-motion";

@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { useCreateListing, useGetCategories } from "@workspace/api-client-react";
+import { useCreateListing, useGetCategories } from "@/lib/supabase-hooks";
 import { BottomNav } from "@/components/navigation";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
@@ -9,7 +9,7 @@ import {
   Loader2, FileText, Sparkles, CheckCircle2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Listing } from "@workspace/api-client-react";
+import type { Listing } from "@/lib/types";
 
 /* ── helpers ─────────────────────────────────────────────── */
 const CONDITIONS = ["New", "Like New", "Used", "Refurbished"] as const;

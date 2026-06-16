@@ -6,8 +6,8 @@ import {
 } from "lucide-react";
 import {
   useGetListing, useGetListings, useWatchListing,
-} from "@workspace/api-client-react";
-import type { Listing } from "@workspace/api-client-react";
+} from "@/lib/supabase-hooks";
+import type { Listing } from "@/lib/types";
 import { PinterestCard } from "@/components/pinterest-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";

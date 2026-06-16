@@ -4,13 +4,13 @@ import {
   Search, Mic, Camera, Menu,
   ShoppingBag, Car, Shirt, Building2, BriefcaseBusiness, Tag, Loader2,
 } from "lucide-react";
-import { useGetListings, useGetFeaturedListings } from "@workspace/api-client-react";
+import { useGetListings, useGetFeaturedListings } from "@/lib/supabase-hooks";
 import { PinterestCard } from "@/components/pinterest-card";
 import { BottomNav } from "@/components/navigation";
 import { Sidebar } from "@/components/sidebar";
 
 import { motion, AnimatePresence } from "framer-motion";
-import type { Listing } from "@workspace/api-client-react";
+import type { Listing } from "@/lib/types";
 
 const CATEGORIES = [
   { label: "Electronics", icon: ShoppingBag, color: "#1d3461" },

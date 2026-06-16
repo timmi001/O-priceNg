@@ -8,12 +8,12 @@ import {
 } from "lucide-react";
 import {
   useGetUserProfile, useGetUserListings, useGetFeaturedListings,
-} from "@workspace/api-client-react";
+} from "@/lib/supabase-hooks";
 import { PinterestCard } from "@/components/pinterest-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "sonner";
-import type { Listing } from "@workspace/api-client-react";
+import type { Listing } from "@/lib/types";
 
 /* ── tab definition ─────────────────────────────────────── */
 type Tab = "all" | "featured" | "new" | "reviews" | "about";

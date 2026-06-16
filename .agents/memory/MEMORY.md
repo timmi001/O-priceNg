@@ -1,0 +1,1 @@
+- [Supabase migration](supabase-migration.md) — oprice-ng fully migrated from Express/api-client-react to direct Supabase queries; schema SQL lives in artifacts/oprice-ng/supabase/schema.sql

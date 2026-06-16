@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { MessageCircle, Share2, Bookmark, BadgeCheck, MapPin } from "lucide-react";
-import type { Listing } from "@workspace/api-client-react";
-import { useWatchListing } from "@workspace/api-client-react";
+import type { Listing } from "@/lib/types";
+import { useWatchListing } from "@/lib/supabase-hooks";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 
@@ -115,7 +115,6 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
             />
           )}
 
-          {/* Top-left badges */}
           <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 items-start">
             {listing.isSponsored && (
               <span className="text-[9px] font-bold text-white/60 bg-black/50 backdrop-blur-sm px-2 py-0.5 rounded-full tracking-wide">
@@ -129,7 +128,6 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
             )}
           </div>
 
-          {/* Top-right: LIVE badge */}
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 items-end">
             {isLive && (
               <div className="flex items-center gap-1 bg-red-600/90 backdrop-blur-sm px-2 py-0.5 rounded-full">
@@ -139,7 +137,6 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
             )}
           </div>
 
-          {/* Bottom gradient + price */}
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/85 to-transparent z-10" />
           <div className="absolute bottom-2.5 left-2.5 z-20 flex items-baseline gap-1.5">
             <span className="text-[15px] font-black text-white drop-shadow leading-none">
@@ -152,7 +149,6 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
             )}
           </div>
 
-          {/* Multiple images indicator */}
           {listing.images && listing.images.length > 1 && (
             <div className="absolute bottom-2.5 right-2.5 z-20 flex gap-0.5">
               {listing.images.slice(0, 3).map((_: string, i: number) => (
@@ -167,18 +163,15 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
 
         {/* ── BODY ── */}
         <div className="px-2.5 pt-2 pb-1">
-          {/* Title */}
           <h3 className="text-[12px] font-bold text-gray-900 dark:text-white leading-snug line-clamp-2 mb-1.5">
             {listing.title}
           </h3>
 
-          {/* Location */}
           <div className="flex items-center gap-1 text-[10px] text-gray-400 dark:text-white/35 mb-2">
             <MapPin className="w-2.5 h-2.5 shrink-0" />
             <span className="truncate">{listing.location}</span>
           </div>
 
-          {/* Seller row */}
           <div className="flex items-center gap-1.5 mb-1.5">
             <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary/50 to-primary/10 shrink-0 overflow-hidden">
               {listing.sellerAvatar && (
@@ -193,7 +186,6 @@ export function PinterestCard({ listing, index }: PinterestCardProps) {
             )}
           </div>
 
-          {/* Engagement row */}
           <div className="flex items-center justify-between border-t border-black/6 dark:border-white/5 pt-1.5 pb-1">
             <button
               onClick={e => e.stopPropagation()}

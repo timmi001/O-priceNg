@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { MessageCircle, Share2, Bookmark, BadgeCheck, MapPin, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import type { Listing } from "@workspace/api-client-react";
-import { useWatchListing } from "@workspace/api-client-react";
+import type { Listing } from "@/lib/types";
+import { useWatchListing } from "@/lib/supabase-hooks";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 
@@ -83,23 +83,18 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
       data-testid={`discover-card-${listing.id}`}
     >
       <div className="rounded-3xl overflow-hidden shadow-xl shadow-black/40 bg-[#111]">
-
-        {/* Large product image area */}
         <div
           className="relative w-full aspect-[4/3] overflow-hidden"
           style={{ backgroundColor: bgColor }}
         >
-          {/* Placeholder gradient visual */}
           <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
 
-          {/* Category label in image */}
           <div className="absolute top-3 left-3 z-10">
             <span className="text-[11px] font-semibold tracking-wide text-white/70 bg-black/40 backdrop-blur-sm px-2.5 py-1 rounded-full">
               {listing.category}
             </span>
           </div>
 
-          {/* Badges */}
           <div className="absolute top-3 right-3 z-10 flex flex-col gap-1.5 items-end">
             {listing.isSponsored && (
               <span className="text-[10px] font-bold text-white/60 bg-black/50 backdrop-blur-sm px-2 py-0.5 rounded-full">
@@ -117,7 +112,6 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
             )}
           </div>
 
-          {/* Real image if available */}
           {listing.images && listing.images.length > 0 && (
             <img
               src={listing.images[0]}
@@ -126,10 +120,8 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
             />
           )}
 
-          {/* Bottom gradient for text legibility */}
           <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/80 to-transparent" />
 
-          {/* Price badge overlaid on image */}
           <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
             <span className="text-xl font-black text-white drop-shadow-lg">
               ₦{listing.price.toLocaleString()}
@@ -145,9 +137,7 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
           </div>
         </div>
 
-        {/* Card body */}
         <div className="px-4 pt-3 pb-1 bg-[#161616]">
-          {/* Seller row */}
           <div className="flex items-center justify-between mb-2">
             <Link
               href={`/seller/${listing.sellerUsername}`}
@@ -171,15 +161,12 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
                 </div>
               </div>
             </Link>
-
           </div>
 
-          {/* Title */}
           <h3 className="text-[15px] font-bold text-white leading-snug line-clamp-1 mb-1">
             {listing.title}
           </h3>
 
-          {/* Location */}
           <div className="flex items-center gap-1 text-[12px] text-white/40 mb-3">
             <MapPin className="w-3 h-3" />
             {listing.location}
@@ -188,7 +175,6 @@ export function DiscoverCard({ listing, index = 0 }: DiscoverCardProps) {
             )}
           </div>
 
-          {/* Action bar */}
           <div className="flex items-center justify-between border-t border-white/5 pt-2 pb-2">
             <button
               onClick={e => e.stopPropagation()}

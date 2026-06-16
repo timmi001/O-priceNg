@@ -1,8 +1,9 @@
 import { useState } from "react";
 import {
   useGetUserProfile, useGetUserListings, useGetBookmarks,
-} from "@workspace/api-client-react";
-import type { Listing } from "@workspace/api-client-react";
+} from "@/lib/supabase-hooks";
+import { useAuth } from "@/lib/auth-context";
+import type { Listing } from "@/lib/types";
 import { BottomNav } from "@/components/navigation";
 import { PinterestCard } from "@/components/pinterest-card";
 import {
@@ -22,7 +23,7 @@ const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: "analytics", label: "Analytics", icon: BarChart3 },
 ];
 
-const USERNAME = "chidi_sells"; // current user (matches CURRENT_USER_ID=1 in api-server)
+// USERNAME is derived from the Supabase auth session (set below in the component)
 
 /* ── analytics mock data ────────────────────────────────── */
 const WEEKLY = [42, 67, 55, 89, 73, 120, 98];
@@ -91,8 +92,11 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState<Tab>("listings");
   const [editOpen,  setEditOpen]  = useState(false);
 
-  const { data: profile, isLoading: loadingProfile } = useGetUserProfile(USERNAME);
-  const { data: listings, isLoading: loadingListings } = useGetUserListings(USERNAME);
+  const { user } = useAuth();
+  const username = user?.user_metadata?.username ?? user?.email?.split("@")[0] ?? "";
+
+  const { data: profile, isLoading: loadingProfile } = useGetUserProfile(username);
+  const { data: listings, isLoading: loadingListings } = useGetUserListings(username);
   const { data: saved,    isLoading: loadingSaved }    = useGetBookmarks();
 
   /* loading skeleton */

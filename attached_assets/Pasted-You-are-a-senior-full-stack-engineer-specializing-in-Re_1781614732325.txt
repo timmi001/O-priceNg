@@ -1,0 +1,224 @@
+You are a senior full-stack engineer specializing in React, Vite, TypeScript, Tailwind CSS, and Supabase.
+
+I have an existing marketplace application called O'price that currently uses mock data and mock API endpoints. The UI, layouts, cards, pages, navigation, search, categories, seller profiles, and listing pages are already designed and working.
+
+Your task is to migrate the application from mock data to Supabase WITHOUT changing the UI design, styling, layouts, user experience, routing, or component structure.
+
+GOAL
+
+The application should look exactly the same as it does now, but all data should come from Supabase instead of mock data.
+
+REQUIREMENTS
+
+1. Preserve Existing UI
+
+* Do not redesign any page.
+* Do not modify colors, spacing, typography, cards, layouts, or navigation.
+* Keep all existing components intact.
+* Keep the current user experience unchanged.
+
+2. Remove Mock Data Sources
+   Identify and replace:
+
+* mock data arrays
+* mock JSON files
+* fake API responses
+* hardcoded products
+* fake seller data
+* sample categories
+* mock featured listings
+
+Replace them with Supabase queries.
+
+3. Create Supabase Integration
+   Create:
+
+src/lib/supabase.ts
+
+Use:
+
+import { createClient } from "@supabase/supabase-js";
+
+Initialize the client using:
+
+VITE_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY
+
+4. Database Tables
+
+Create and connect the following tables:
+
+users
+
+* id
+* name
+* email
+* avatar_url
+* created_at
+
+listings
+
+* id
+* user_id
+* title
+* description
+* price
+* image_url
+* category
+* location
+* featured
+* created_at
+
+sellers
+
+* id
+* user_id
+* business_name
+* rating
+* total_sales
+* created_at
+
+favorites
+
+* id
+* user_id
+* listing_id
+* created_at
+
+5. Listings Migration
+
+Replace all:
+
+fetch("/api/listings")
+fetch("/api/listings/featured")
+fetch("/api/listings/:id")
+
+with Supabase queries.
+
+Homepage should:
+
+* Load latest listings
+* Load featured listings
+* Support pagination
+* Handle loading states
+* Handle empty states
+* Handle errors
+
+6. Search Migration
+
+Replace mock search with Supabase search.
+
+Requirements:
+
+* Search listings by title
+* Search listings by category
+* Search listings by seller name
+* Case-insensitive search
+
+7. Seller Profiles
+
+Replace mock seller data with Supabase.
+
+Requirements:
+
+* Seller profile page
+* Seller listings
+* Seller statistics
+* Seller information
+
+8. User Generated Listings
+
+Implement a real listing creation flow.
+
+When a logged-in user creates a listing:
+
+* Save listing to Supabase
+* Associate listing with user_id
+* Store image URL
+* Save category
+* Save location
+* Save timestamps
+
+After creation:
+
+* Listing appears on homepage
+* Listing appears in search
+* Listing appears on seller profile
+* Listing appears in categories
+
+without requiring page code changes.
+
+9. Favorites System
+
+Connect favorites to Supabase.
+
+Requirements:
+
+* Save favorite listings
+* Remove favorites
+* Load user favorites
+* Persist across sessions
+
+10. Authentication Integration
+
+Connect all user actions to Supabase Auth.
+
+Requirements:
+
+* Sign up
+* Sign in
+* Sign out
+* Current user session
+* Protected listing creation
+
+11. Empty State Handling
+
+If database has no listings:
+
+Display:
+"No listings available yet."
+
+Do not crash.
+Do not show blank pages.
+
+12. Loading States
+
+Every page must:
+
+* Show loading state
+* Handle network errors
+* Recover gracefully
+
+13. Production Readiness
+
+Ensure:
+
+* Works on Vercel
+* No dependency on Replit backend
+* No dependency on Express routes
+* No dependency on mock APIs
+* No dependency on localhost URLs
+
+14. Final Verification
+
+Search entire project for:
+
+/api/
+/mock/
+mockData
+sampleData
+hardcoded listings
+
+Replace all occurrences with Supabase-powered solutions.
+
+EXPECTED RESULT
+
+The application should look exactly the same as before.
+
+The only difference should be that:
+
+* Real users can create accounts.
+* Real users can create listings.
+* Listings are stored in Supabase.
+* Listings automatically appear throughout the platform.
+* The application works fully on Vercel without any mock APIs or Express backend.

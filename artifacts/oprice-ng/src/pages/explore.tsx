@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useGetTrendingSearches, useGetCategories, useGetListings } from "@workspace/api-client-react";
-import type { Listing } from "@workspace/api-client-react";
+import { useGetTrendingSearches, useGetCategories, useGetListings } from "@/lib/supabase-hooks";
+import type { Listing } from "@/lib/types";
 import { BottomNav } from "@/components/navigation";
 import { ListingCard } from "@/components/listing-card";
 import { Search, Loader2, ArrowRight } from "lucide-react";
