@@ -39,7 +39,7 @@ export const CATEGORY_CONFIG: CategoryConfig[] = [
     slug: "fashion",
     icon: Shirt,
     color: "#3a1a1a",
-    subcategories: ["Men's Wear", "Women's Wear", "Shoes", "Bags", "Jewelry", "Kids' Fashion", "Ankara & Native", "Underwear"],
+    subcategories: ["Men's Wear", "Women's Wear", "Shoes", "Bags", "Jewelry", "Kids' Fashion", "Underwear"],
   },
   {
     label: "Home",

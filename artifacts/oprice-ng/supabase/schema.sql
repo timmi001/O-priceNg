@@ -70,7 +70,7 @@ insert into public.categories (name, slug, color, subcategories) values
   ('Electronics',  'electronics',     '#1a3a5c', ARRAY['Televisions','Generators','Air Conditioners','Refrigerators','Sound Systems','Cameras','Fans','Irons & Steamers']),
   ('Phones',       'phones',          '#1a3a2a', ARRAY['Smartphones','Tablets','Earphones','Chargers & Cables','Cases & Covers','Smartwatches','Feature Phones']),
   ('Computers',    'computers',       '#2a1a4a', ARRAY['Laptops','Desktops','Monitors','Printers','Accessories','Networking','Storage']),
-  ('Fashion',      'fashion',         '#3a1a1a', ARRAY['Men''s Wear','Women''s Wear','Shoes','Bags','Jewelry','Kids'' Fashion','Ankara & Native','Underwear']),
+  ('Fashion',      'fashion',         '#3a1a1a', ARRAY['Men''s Wear','Women''s Wear','Shoes','Bags','Jewelry','Kids'' Fashion','Underwear']),
   ('Home',         'home-living',     '#1a3a1a', ARRAY['Furniture','Kitchenware','Bedding','Lighting','Home Decor','Garden','Cleaning Supplies','Tools']),
   ('Food',         'food-agriculture','#2a3a10', ARRAY['Food Items','Farm Produce','Livestock','Poultry','Farm Equipment','Seeds & Fertilizers','Fish & Seafood']),
   ('Vehicles',     'vehicles',        '#2a1a00', ARRAY['Cars','Motorcycles','Trucks','Buses','Boats','Spare Parts','Tyres & Wheels','Car Accessories']),
