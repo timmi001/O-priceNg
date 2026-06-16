@@ -122,7 +122,7 @@ export default function Home() {
               <Menu className="w-5 h-5" />
             </button>
             <div className="hidden md:block w-9 h-9" />
-            <img src="/oprice-logo.jpg" alt="O'Price" className="h-9 w-auto object-contain" />
+            <div />
             <div className="flex items-center gap-2">
               <Link href="/profile" data-testid="link-profile-avatar">
                 <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/60 to-primary/10 border-2 border-primary/30 overflow-hidden" />
