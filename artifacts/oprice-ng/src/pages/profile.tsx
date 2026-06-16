@@ -22,7 +22,7 @@ const TABS: { key: Tab; label: string; icon: React.ElementType }[] = [
   { key: "analytics", label: "Analytics", icon: BarChart3 },
 ];
 
-const USERNAME = "johntech"; // current user
+const USERNAME = "chidi_sells"; // current user (matches CURRENT_USER_ID=1 in api-server)
 
 /* ── analytics mock data ────────────────────────────────── */
 const WEEKLY = [42, 67, 55, 89, 73, 120, 98];
