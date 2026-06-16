@@ -1,1 +1,2 @@
 - [Supabase migration](supabase-migration.md) — oprice-ng fully migrated from Express/api-client-react to direct Supabase queries; schema SQL lives in artifacts/oprice-ng/supabase/schema.sql
+- [Vite env vars in Replit](vite-replit-env.md) — Replit secrets don't auto-inject as import.meta.env.VITE_*; must use `define` in vite.config.ts to forward them explicitly.
