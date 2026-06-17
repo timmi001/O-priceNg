@@ -19,6 +19,7 @@ export interface Listing {
   watchCount: number;
   offerCount: number;
   isWatched?: boolean;
+  whatsappNumber?: string;
   sellerName: string;
   sellerUsername: string;
   sellerAvatar?: string;
@@ -64,4 +65,12 @@ export interface ListingsPage {
 export function formatLocation(item: { country?: string; state?: string; city?: string }): string {
   const parts = [item.city, item.state, item.country].filter(Boolean);
   return parts.join(", ") || "Location unknown";
+}
+
+export function whatsappLink(number: string, listingTitle?: string): string {
+  const clean = number.replace(/\D/g, "");
+  const msg = listingTitle
+    ? `Hi, I'm interested in your listing: ${listingTitle}`
+    : "Hi, I'm interested in your listing";
+  return `https://wa.me/${clean}?text=${encodeURIComponent(msg)}`;
 }

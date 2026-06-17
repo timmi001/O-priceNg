@@ -1,0 +1,116 @@
+## 🚀 Prompt: Add WhatsApp Contact System (O’price Marketplace)
+
+Implement a WhatsApp-based seller contact system in my React (Vite + TypeScript + Tailwind) + Supabase marketplace app.
+
+---
+
+## 🎯 GOAL
+
+Allow buyers to click a **“Chat on WhatsApp”** button on each listing card to directly message the seller via WhatsApp.
+
+---
+
+## 🗄️ SUPABASE STRUCTURE
+
+### profiles table (seller info)
+
+* id (uuid)
+* full_name
+* whatsapp (required, international format e.g. 2348012345678)
+
+### listings table
+
+* id
+* user_id (foreign key → profiles.id)
+* title
+* price
+* image_url
+
+---
+
+## 🔗 DATA FETCH (IMPORTANT)
+
+Update listings query to JOIN seller profile:
+
+```ts id="wa1"
+supabase
+  .from("listings")
+  .select(`
+    id,
+    title,
+    price,
+    image_url,
+    profiles (
+      whatsapp,
+      full_name
+    )
+  `);
+```
+
+---
+
+## 📱 WHATSAPP LINK LOGIC
+
+Build WhatsApp link from seller profile:
+
+```ts id="wa2"
+const whatsappLink = `https://wa.me/${listing.profiles.whatsapp}`;
+```
+
+Optional:
+
+```ts id="wa3"
+const whatsappLink = `https://wa.me/${listing.profiles.whatsapp}?text=Hi%20I%20am%20interested%20in%20this%20product`;
+```
+
+---
+
+## 🎨 LISTING CARD UI
+
+Each listing card must include:
+
+* Product image
+* Title
+* Price (bold)
+* Seller name (optional)
+* Green “Chat on WhatsApp” button
+
+---
+
+## 🟢 BUTTON REQUIREMENTS
+
+* Full width
+* Green (#25D366 style)
+* Rounded corners
+* Opens in new tab
+* No backend/API required
+
+```tsx id="wa4"
+<a
+  href={whatsappLink}
+  target="_blank"
+  className="bg-green-500 text-white w-full py-2 rounded-lg text-center font-medium"
+>
+  Chat on WhatsApp
+</a>
+```
+
+---
+
+## ⚙️ RULES
+
+* No Express backend
+* No `/api/*` routes
+* No WhatsApp API
+* Supabase only
+* Must work on Vercel
+* Must be production-ready
+
+---
+
+## 🚀 RESULT
+
+* Buyers click listing → open WhatsApp instantly
+* Sellers receive direct messages
+* No in-app chat system needed
+* Works perfectly for Africa marketplace users

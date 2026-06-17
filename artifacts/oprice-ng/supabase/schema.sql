@@ -105,6 +105,7 @@ create table if not exists public.listings (
   is_auction      boolean     default false,
   auction_ends_at timestamptz,
   is_negotiable   boolean     default false,
+  whatsapp_number text,
   view_count      integer     default 0,
   watch_count     integer     default 0,
   offer_count     integer     default 0,
@@ -196,3 +197,6 @@ on conflict do nothing;
 --   add column if not exists city text;
 --
 -- update public.listings set country = 'Nigeria' where country is null;
+--
+-- alter table public.listings
+--   add column if not exists whatsapp_number text;

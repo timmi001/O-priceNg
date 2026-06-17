@@ -38,6 +38,7 @@ function transformListing(row: Record<string, unknown>): Listing {
     watchCount: (row.watch_count as number) || 0,
     offerCount: (row.offer_count as number) || 0,
     isWatched: false,
+    whatsappNumber: row.whatsapp_number as string | undefined,
     sellerName: (profile?.name as string) || "Unknown Seller",
     sellerUsername: (profile?.username as string) || "",
     sellerAvatar: profile?.avatar_url as string | undefined,
@@ -310,6 +311,7 @@ interface CreateListingInput {
   country: string;
   state?: string;
   city?: string;
+  whatsappNumber?: string;
   images?: string[];
   shippingInfo?: string;
 }
@@ -334,6 +336,7 @@ export function useCreateListing() {
           country: input.country,
           state: input.state,
           city: input.city,
+          whatsapp_number: input.whatsappNumber || null,
           images: input.images ?? [],
           shipping_info: input.shippingInfo,
         })
